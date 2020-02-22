@@ -26,7 +26,7 @@ $ npm -v
 $ node -v
 ```
 
-####Starting the Backend
+### Starting the Backend
 ```sh
 $ amplify status --will show you what you've added already and if it's locally configured or deployed
 $ amplify add <category> --will allow you to add features like user login or a backend API
