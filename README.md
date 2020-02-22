@@ -37,4 +37,9 @@ $ amplify publish --will build all your local backend and frontend resources (if
 Pro tip:
 Try amplify add api to create a backend API and then amplify publish to deploy everything
 
+### Test API Setup
+  - GraphQL endpoint: https://sjfek2nlgffovirxroz7mnem3q.appsync-api.ap-south-1.amazonaws.com/graphql
+  - GraphQL API KEY: da2-ogarxe7wxvamtpbixnucdwr52m
+
+
 
