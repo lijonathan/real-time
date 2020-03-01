@@ -1,6 +1,7 @@
 #python
 venv
-
+#intelliJ
+.idea
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
