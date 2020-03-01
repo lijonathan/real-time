@@ -4,10 +4,10 @@ import { products } from '../products';
 
 @Component({
   selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  templateUrl: './game-module.html',
+  styleUrls: ['./game-module.css']
 })
-export class ProductListComponent {
+export class GameModule {
   products = products;
 
   share() {
