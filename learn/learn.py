@@ -2,7 +2,6 @@ import matplotlib
 import numpy
 import pandas
 import scipy
-import sklearn
 import sys
 # Load libraries
 from pandas import read_csv
@@ -12,7 +11,6 @@ print('scipy: {}'.format(scipy.__version__))
 print('numpy: {}'.format(numpy.__version__))
 print('matplotlib: {}'.format(matplotlib.__version__))
 print('pandas: {}'.format(pandas.__version__))
-print('sklearn: {}'.format(sklearn.__version__))
 
 # Load dataset
 url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
