@@ -18,4 +18,4 @@ amplify-gradle-config.json
 amplifyxc.config
 
 # glove stuff
-2db4660fce-private.pem.key
+glove/certs/2db4660fce-private.pem.key

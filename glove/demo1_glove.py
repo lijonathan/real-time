@@ -15,10 +15,16 @@ TODO:
 * Add files to git
 '''
 
+# Import AWS IoT Core libs
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
-import time
 import json
+# Import BNO055 libs
+import board
+import busio
+import adafruit_bno055
+# Import utility libs
+import time
 
 # Custom MQTT message callback
 def customCallback(client, userdata, message):
@@ -30,16 +36,13 @@ def customCallback(client, userdata, message):
 
 # Connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
-'''rootCAPath = "certs/root-CA.crt"
+rootCAPath = "certs/root-CA.crt"
 certificatePath = "certs/2db4660fce-certificate.pem.crt"
-privateKeyPath = "certs/2db4660fce-private.pem.key"'''
-rootCAPath = "root-CA.crt"
-certificatePath = "2db4660fce-certificate.pem.crt"
-privateKeyPath = "2db4660fce-private.pem.key"
+privateKeyPath = "certs/2db4660fce-private.pem.key"
 port = 8883
 clientId = "glove"
 sensorDataTopic = "$aws/things/sensor_glove/shadow/update"
-controlTopic = "\$aws/things/glove_control/shadow/update"
+controlTopic = "$aws/things/glove_control/shadow/update"
 
 # Global vars
 start = False
@@ -71,24 +74,31 @@ myAWSIoTMQTTClient.connect()
 myAWSIoTMQTTClient.subscribe(sensorDataTopic, 1, customCallback)
 time.sleep(2)
 
+# Create BNO055 device
+i2c = busio.I2C(board.SCL, board.SDA)
+sensor = adafruit_bno055.BNO055(i2c)
+
 # Publish to sensor data sensorDataTopic when start sensorDataTopic is received until control sensorDataTopic says stop
 while True:
-    '''message = {}
+    imu_orient = sensor.euler
+    imu_accel = sensor.acceleration
+    
+    message = {}
     message['state'] = {}
     message['state']['reported'] = {}
-    message['state']['reported']['flex_index'] =
+    '''message['state']['reported']['flex_index'] =
     message['state']['reported']['flex_middle'] =
     message['state']['reported']['flex_ring'] =
     message['state']['reported']['flex_pinky'] =
-    message['state']['reported']['flex_thumb'] =
-    message['state']['reported']['imu_x'] =
-    message['state']['reported']['imu_y'] =
-    message['state']['reported']['imu_z'] =
-    message['state']['reported']['imu_accel_x'] =
-    message['state']['reported']['imu_accel_y'] =
-    message['state']['reported']['imu_accel_z'] =
+    message['state']['reported']['flex_thumb'] ='''
+    message['state']['reported']['imu_x'] = imu_orient[0]
+    message['state']['reported']['imu_y'] = imu_orient[1]
+    message['state']['reported']['imu_z'] = imu_orient[2]
+    message['state']['reported']['imu_accel_x'] = imu_accel[0]
+    message['state']['reported']['imu_accel_y'] = imu_accel[1]
+    message['state']['reported']['imu_accel_z'] = imu_accel[2]
     messageJson = json.dumps(message)
     
-    myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)'''
+    myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)
 
     time.sleep(1)
