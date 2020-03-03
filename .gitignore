@@ -16,3 +16,6 @@ awsconfiguration.json
 amplifyconfiguration.json
 amplify-gradle-config.json
 amplifyxc.config
+
+# glove stuff
+2db4660fce-private.pem.key
