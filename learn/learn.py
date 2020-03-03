@@ -22,16 +22,16 @@ dataset = read_csv(url, names=names)
 print('Data Set Shape: ')
 print(dataset.shape)
 
-#First 20 rows of sample data set
+# First 20 rows of sample data set
 print('First 20 Rows of Data Set')
 print(dataset.head(20))
 
-#Statisical Summary of Sample Data Set
+# Statistical Summary of Sample Data Set
 print('Statistical Summary of Data Set')
 print(dataset.describe())
 
-#Class Distribution of Data Set
+# Class Distribution of Data Set
 print('Class Distribution of Data Set')
 print(dataset.groupby('class').size())
 
-#Start 4.1 on https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
+# Start 4.1 on https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
