@@ -5,26 +5,22 @@
 *
 * Created with help from sample code from AWS and Adafruit
 '''
-'''
-TODO:
-* Remove remaining arp parser refs
-* Add sensor data collection
-* Add subscribing to control sensorDataTopic
-* Investigate prettier way handle json creation
-* Split file into functions?
-* Add files to git
-'''
 
+# Import utility libs
+import time
 # Import AWS IoT Core libs
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
 import json
-# Import BNO055 libs
+# Import Adafruit base libs
 import board
 import busio
+import digitalio
+# Import BNO055 lib
 import adafruit_bno055
-# Import utility libs
-import time
+# Import MCP3008 libs
+import adafruit_mcp3xxx.mcp3008 as MCP
+from adafruit_mcp3xxx.analog_in import AnalogIn
 
 class CallbackContainer(object):
 
@@ -85,6 +81,20 @@ time.sleep(2)
 i2c = busio.I2C(board.SCL, board.SDA)
 sensor = adafruit_bno055.BNO055(i2c)
 
+# Setup MCP3008
+## Create the spi bus
+spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
+## Create the cs (chip select)
+cs = digitalio.DigitalInOut(board.D5)
+## Create the mcp object
+mcp = MCP.MCP3008(spi, cs)
+## Create an analog input channels
+chan0 = AnalogIn(mcp, MCP.P0)
+chan1 = AnalogIn(mcp, MCP.P1)
+chan2 = AnalogIn(mcp, MCP.P2)
+chan3 = AnalogIn(mcp, MCP.P3)
+chan4 = AnalogIn(mcp, MCP.P4)
+
 # Publish to sensor data sensorDataTopic when start sensorDataTopic is received until control sensorDataTopic says stop
 while True:
     if(myCallbackContainer.getState()):
@@ -94,11 +104,11 @@ while True:
         message = {}
         message['state'] = {}
         message['state']['reported'] = {}
-        '''message['state']['reported']['flex_index'] =
-        message['state']['reported']['flex_middle'] =
-        message['state']['reported']['flex_ring'] =
-        message['state']['reported']['flex_pinky'] =
-        message['state']['reported']['flex_thumb'] ='''
+        message['state']['reported']['flex_index'] = chan0.value
+        message['state']['reported']['flex_middle'] = chan1.value
+        message['state']['reported']['flex_ring'] = chan2.value
+        message['state']['reported']['flex_pinky'] = chan3.value
+        message['state']['reported']['flex_thumb'] = chan4.value
         message['state']['reported']['imu_x'] = imu_orient[0]
         message['state']['reported']['imu_y'] = imu_orient[1]
         message['state']['reported']['imu_z'] = imu_orient[2]
