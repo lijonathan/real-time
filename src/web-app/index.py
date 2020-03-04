@@ -14,7 +14,7 @@
  * permissions and limitations under the License.
  */
  '''
-from flask import Flask
+
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
 import time
@@ -22,47 +22,15 @@ import argparse
 import json
 
 AllowedActions = ['both', 'publish', 'subscribe']
-app = Flask(__name__)
-'''
-class CallbackContainer(object):
-
-    def __init__(self, client):
-        self._client = client
-        self._state = False
-        self._imu_x = 0
-        self._imu_y = 0
-        self._imu_z = 0
-
-    # Custom MQTT message callback
-    def customCallback(self, client, userdata, message):
-        topicContents = json.loads(message.payload.decode('utf-8'))
-        print(topicContents)
-        self._imu_x = topicContents['state']['reported']['imu_x']
-        self._imu_y = topicContents['state']['reported']['imu_y']
-        self._imu_z = topicContents['state']['reported']['imu_z']
-
-    def getIMUX(self):
-        return self._imu_x
-
-    def getIMUY(self):
-        return self._imu_y
-
-    def getIMUZ(self):
-        return self._imu_z
 
 # Custom MQTT message callback
-'''def customCallback(client, userdata, message):
-    return {
-        "message": message.payload,
-        "topic": message.topic,
-    }'''
+def customCallback(client, userdata, message):
+    print("Received a new message: ")
+    print(message.payload)
+    print("from topic: ")
+    print(message.topic)
+    print("--------------\n\n")
 
-# def customCallback(message):
-# print("Received a new message: ")
-# print(message.payload)
-# print("from topic: ")
-# print(message.topic)
-# print("--------------\n\n")
 
 # Read in command-line parameters
 parser = argparse.ArgumentParser()
@@ -77,7 +45,7 @@ parser.add_argument("-id", "--clientId", action="store", dest="clientId", defaul
                     help="Targeted client id")
 parser.add_argument("-t", "--topic", action="store", dest="topic", default="sdk/test/Python", help="Targeted topic")
 parser.add_argument("-m", "--mode", action="store", dest="mode", default="both",
-                    help="Operation modes: %s" % str(AllowedActions))
+                    help="Operation modes: %s"%str(AllowedActions))
 parser.add_argument("-M", "--message", action="store", dest="message", default="Hello World!",
                     help="Message to publish")
 
@@ -138,11 +106,8 @@ myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 # Connect and subscribe to AWS IoT
 myAWSIoTMQTTClient.connect()
 if args.mode == 'both' or args.mode == 'subscribe':
-    myCallbackContainer = CallbackContainer(myAWSIoTMQTTClient)
-    myAWSIoTMQTTClient.subscribe(topic, 1, myCallbackContainer.customCallback)
+    myAWSIoTMQTTClient.subscribe(topic, 1, customCallback)
 time.sleep(2)
-
-app.run()
 
 # Publish to the same topic in a loop forever
 loopCount = 0
@@ -156,8 +121,4 @@ while True:
         if args.mode == 'publish':
             print('Published topic %s: %s\n' % (topic, messageJson))
         loopCount += 1
-
-    @app.route('/')
-    def printTopic():
-        return myCallbackContainer.getIMUX()
     time.sleep(1)
