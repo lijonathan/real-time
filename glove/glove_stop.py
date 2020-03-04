@@ -48,6 +48,6 @@ time.sleep(2)
 message = {}
 message['state'] = {}
 message['state']['reported'] = {}
-message['state']['reported']['command'] = "stop"
+message['state']['reported']['command'] = 'stop'
 messageJson = json.dumps(message)
 myAWSIoTMQTTClient.publish(controlTopic, messageJson, 1)

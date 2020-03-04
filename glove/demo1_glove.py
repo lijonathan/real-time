@@ -26,13 +26,22 @@ import adafruit_bno055
 # Import utility libs
 import time
 
-# Custom MQTT message callback
-def customCallback(client, userdata, message):
-    print("Received a new message: ")
-    print(message.payload)
-    print("from sensorDataTopic: ")
-    print(message.topic)
-    print("--------------\n\n")
+class CallbackContainer(object):
+
+    def __init__(self, client):
+        self._client = client
+        self._state = False
+
+    # Custom MQTT message callback
+    def customCallback(self, client, userdata, message):
+        topicContents = json.loads(message.payload.decode('utf-8'))
+        if(topicContents['state']['reported']['command'] == 'start'):
+            self._state = True
+        elif(topicContents['state']['reported']['command'] == 'stop'):
+            self._state = False
+
+    def getState(self):
+        return self._state
 
 # Connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
@@ -43,9 +52,6 @@ port = 8883
 clientId = "glove"
 sensorDataTopic = "$aws/things/sensor_glove/shadow/update"
 controlTopic = "$aws/things/glove_control/shadow/update"
-
-# Global vars
-start = False
 
 # Configure logging
 logger = logging.getLogger("AWSIoTPythonSDK.core")
@@ -71,7 +77,8 @@ myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 myAWSIoTMQTTClient.connect()
 
 # Subscribe to control sensorDataTopic
-myAWSIoTMQTTClient.subscribe(sensorDataTopic, 1, customCallback)
+myCallbackContainer = CallbackContainer(myAWSIoTMQTTClient)
+myAWSIoTMQTTClient.subscribe(controlTopic, 1, myCallbackContainer.customCallback)
 time.sleep(2)
 
 # Create BNO055 device
@@ -80,25 +87,26 @@ sensor = adafruit_bno055.BNO055(i2c)
 
 # Publish to sensor data sensorDataTopic when start sensorDataTopic is received until control sensorDataTopic says stop
 while True:
-    imu_orient = sensor.euler
-    imu_accel = sensor.acceleration
-    
-    message = {}
-    message['state'] = {}
-    message['state']['reported'] = {}
-    '''message['state']['reported']['flex_index'] =
-    message['state']['reported']['flex_middle'] =
-    message['state']['reported']['flex_ring'] =
-    message['state']['reported']['flex_pinky'] =
-    message['state']['reported']['flex_thumb'] ='''
-    message['state']['reported']['imu_x'] = imu_orient[0]
-    message['state']['reported']['imu_y'] = imu_orient[1]
-    message['state']['reported']['imu_z'] = imu_orient[2]
-    message['state']['reported']['imu_accel_x'] = imu_accel[0]
-    message['state']['reported']['imu_accel_y'] = imu_accel[1]
-    message['state']['reported']['imu_accel_z'] = imu_accel[2]
-    messageJson = json.dumps(message)
-    
-    myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)
+    if(myCallbackContainer.getState()):
+        imu_orient = sensor.euler
+        imu_accel = sensor.acceleration
+        
+        message = {}
+        message['state'] = {}
+        message['state']['reported'] = {}
+        '''message['state']['reported']['flex_index'] =
+        message['state']['reported']['flex_middle'] =
+        message['state']['reported']['flex_ring'] =
+        message['state']['reported']['flex_pinky'] =
+        message['state']['reported']['flex_thumb'] ='''
+        message['state']['reported']['imu_x'] = imu_orient[0]
+        message['state']['reported']['imu_y'] = imu_orient[1]
+        message['state']['reported']['imu_z'] = imu_orient[2]
+        message['state']['reported']['imu_accel_x'] = imu_accel[0]
+        message['state']['reported']['imu_accel_y'] = imu_accel[1]
+        message['state']['reported']['imu_accel_z'] = imu_accel[2]
+        messageJson = json.dumps(message)
+        
+        myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)
 
     time.sleep(1)
