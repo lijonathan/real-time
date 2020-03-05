@@ -31,6 +31,11 @@ def customCallback(client, userdata, message):
     print(message.topic)
     print("--------------\n\n")
 
+# from __future__ import print_function
+# handData = open("handData.txt", "w")
+# handData.truncate(0)
+# print("test", handData)
+
 
 # Read in command-line parameters
 parser = argparse.ArgumentParser()
