@@ -1,12 +1,8 @@
-from flask import Flask
-
-# Display in browser
-app = Flask(__name__)
+from browser import document, alert
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def greet(event):
+    alert("Hello " + document["name-box"].value + "!")
 
 
-app.run()
+document["greet-button"].bind("click", greet)
