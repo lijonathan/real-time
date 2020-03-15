@@ -9,12 +9,15 @@ AllowedActions = ['both', 'publish', 'subscribe']
 
 # Custom MQTT message callback
 def customCallback(client, userdata, message):
-    hand_data = open("handData.txt", "w")
-    print("Received a new message: ", hand_data)
-    print(message.payload, hand_data)
-    print("from topic: ", hand_data)
-    print(message.topic, hand_data)
-    print("--------------\n\n", hand_data)
+    #hand_data = open("handData.txt", "w")
+    #print("Received a new message: ", hand_data)
+    print(message.payload)
+    with open ("hand_data.txt", 'a') as data_file:
+        data_file.write(str(message.payload))
+        data_file.write("\n")
+    #print("from topic: ", hand_data)
+    #print(message.topic)
+    print("--------------\n\n")
 
 # from __future__ import print_function
 # handData = open("handData.txt", "w")
@@ -68,12 +71,12 @@ if not args.useWebsocket and not args.port:  # When no port override for non-Web
     port = 8883
 
 # Configure logging
-logger = logging.getLogger("AWSIoTPythonSDK.core")
-logger.setLevel(logging.DEBUG)
-streamHandler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-streamHandler.setFormatter(formatter)
-logger.addHandler(streamHandler)
+# logger = logging.getLogger("AWSIoTPythonSDK.core")
+# logger.setLevel(logging.DEBUG)
+# streamHandler = logging.StreamHandler()
+# formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# streamHandler.setFormatter(formatter)
+# logger.addHandler(streamHandler)
 
 # Init AWSIoTMQTTClient
 myAWSIoTMQTTClient = None

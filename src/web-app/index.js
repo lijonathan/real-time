@@ -1,4 +1,4 @@
-var pythonDataFile = 'handData.txt'
+var pythonDataFile = 'hand_data.txt'
 
 function readTextFile(pythonDataFile)
 {

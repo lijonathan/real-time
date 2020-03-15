@@ -3,9 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <title>Sign Language Game</title>
-    <script type="module">import * as hello from "./__target__/hello.js";</script>
+    <script>
+      function readTextFile()
+      {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", 'hand_data.txt', false);
+        rawFile.onreadystatechange = function ()
+        {
+          if(rawFile.readyState === 4)
+          {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+              var allText = rawFile.responseText;
+              alert(allText);
+            }
+          }
+        }
+        rawFile.send(null);
+      }
+    </script>
   </head>
   <body>
-  <input id="name-box" placeholder="Enter your name">
-  <button id="greet-button">Say Hello</button>
+  <button id="greet-button" onclick="readTextFile()">Alert Output</button>
   </body>
