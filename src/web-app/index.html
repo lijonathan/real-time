@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <title>Sign Language Game</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script>
-      function readTextFile()
-      {
-        var rawFile = new XMLHttpRequest();
-        rawFile.open("GET", 'hand_data.txt', false);
-        rawFile.onreadystatechange = function ()
-        {
-          if(rawFile.readyState === 4)
-          {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-              var allText = rawFile.responseText;
-              alert(allText);
+        function readTextFile() {
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", 'hand_data.txt', false);
+            rawFile.onreadystatechange = function () {
+                if (rawFile.readyState === 4) {
+                    if (rawFile.status === 200 || rawFile.status == 0) {
+                        var allText = rawFile.responseText;
+                        var textAreaTag = document.getElementById("output")
+                        textAreaTag.innerHTML = allText
+                    }
+                }
             }
-          }
+            rawFile.send(null);
         }
-        rawFile.send(null);
-      }
     </script>
-  </head>
-  <body>
-  <button id="greet-button" onclick="readTextFile()">Alert Output</button>
-  </body>
+</head>
+<body>
+<div class="gameHeaderWindow">
+    <div class="gameHeaderText">Sign Language Game</div>
+</div>
+<button id="activateData" class="startButton" onclick="readTextFile()">Start Game</button>
+<textarea id="output" class="outputWindow">
+  </textarea>
+</body>
