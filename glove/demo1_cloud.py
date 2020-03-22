@@ -21,6 +21,24 @@ import json
 # Import MCP3008 libs
 #import adafruit_mcp3xxx.mcp3008 as MCP
 #from adafruit_mcp3xxx.analog_in import AnalogIn
+from sklearn.ensemble import RandomForestClassifier
+import json
+
+
+with open ("..\\src\\web-app\\misc\\fabData.json") as json_file:
+    data = json.load(json_file)
+
+X = []
+Y = []
+for data_pt in data:
+    vals = data_pt["state"]["reported"]
+    X.append(list(vals.values()))
+    result = data_pt["result"]
+    Y.append(result)
+
+
+rf = RandomForestClassifier()
+rf.fit(X, Y)
 
 class CallbackContainer(object):
 
@@ -33,8 +51,8 @@ class CallbackContainer(object):
     def customCallback(self, client, userdata, message):
         topicContents = json.loads(message.payload.decode('utf-8'))
         self.imu_orient_x = topicContents['state']['reported']['imu_x']
-	self.imu_orient_y = topicContents['state']['reported']['imu_y']
-	self.imu_orient_z = topicContents['state']['reported']['imu_z']
+	    self.imu_orient_y = topicContents['state']['reported']['imu_y']
+	    self.imu_orient_z = topicContents['state']['reported']['imu_z']
         print(topicContents)
         print("\n\n\n")
 
@@ -105,30 +123,17 @@ time.sleep(2)
 
 # Publish to sensor data sensorDataTopic when start sensorDataTopic is received until control sensorDataTopic says stop
 while True:
-    #if(myCallbackContainer.getState()):
-        #imu_orient = sensor.euler
-        #imu_accel = sensor.acceleration
 
-    message = {}
-    message['state'] = {}
-    message['state']['reported'] = {}
-    '''
-    message['state']['reported']['flex_index'] = chan0.value
-    message['state']['reported']['flex_middle'] = chan1.value
-    message['state']['reported']['flex_ring'] = chan2.value
-    message['state']['reported']['flex_pinky'] = chan3.value
-    message['state']['reported']['flex_thumb'] = chan4.value
-    '''
-    message['state']['reported']['imu_x'] = myCallbackContainer.getx()
-    message['state']['reported']['imu_y'] = myCallbackContainer.gety()
-    message['state']['reported']['imu_z'] = myCallbackContainer.getz()
-    '''
-    message['state']['reported']['imu_accel_x'] = imu_accel[0]
-    message['state']['reported']['imu_accel_y'] = imu_accel[1]
-    message['state']['reported']['imu_accel_z'] = imu_accel[2]
-    '''
-    messageJson = json.dumps(message)
+    X_input = []
+    vals_input = message["state"]["reported"]
 
-    myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)
+    X_input.append(myCallbackContainer.getx())
+    X_input.append(myCallbackContainer.gety())
+    X_input.append(myCallbackContainer.getz())
+    
+    res = rf.pred(X_input)
+
+
+    myAWSIoTMQTTClient.publish(sensorDataTopic, res, 1)
 
     time.sleep(1)
