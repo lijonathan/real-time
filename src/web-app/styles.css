@@ -1,3 +1,4 @@
+
 .gameHeaderWindow {
   background-color:#2196F3;
   padding:2rem;
@@ -7,10 +8,6 @@
   font-family: "Lucinda Grande", "Lucinda Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
   font-size: 30px;
   text-align: center;
-}
-.startButton {
-  padding: .5rem;
-  margin: 1rem auto .5rem;
 }
 .outputWindow {
   width: 10rem;
