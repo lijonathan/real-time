@@ -45,14 +45,14 @@ class CallbackContainer(object):
     def __init__(self, client):
         self._client = client
         self.imu_orient_z = 0
-	self.imu_orient_x = 0
-	self.imu_orient_y = 0
+    self.imu_orient_x = 0
+    self.imu_orient_y = 0
     # Custom MQTT message callback
     def customCallback(self, client, userdata, message):
         topicContents = json.loads(message.payload.decode('utf-8'))
         self.imu_orient_x = topicContents['state']['reported']['imu_x']
-	    self.imu_orient_y = topicContents['state']['reported']['imu_y']
-	    self.imu_orient_z = topicContents['state']['reported']['imu_z']
+        self.imu_orient_y = topicContents['state']['reported']['imu_y']
+        self.imu_orient_z = topicContents['state']['reported']['imu_z']
         print(topicContents)
         print("\n\n\n")
 
@@ -60,10 +60,10 @@ class CallbackContainer(object):
         return self.imu_orient_x
 
     def gety(self):
-	return self.imu_orient_y
+    return self.imu_orient_y
 
     def getz(self):
-	return self.imu_orient_z
+    return self.imu_orient_z
 
 # Connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
