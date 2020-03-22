@@ -3,46 +3,37 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Sign Language Game</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
-    <!-- Bootstrap CSS -->
-    <script>
-        function readTextFile() {
-            var rawFile = new XMLHttpRequest();
-            rawFile.open("GET", 'hand_data.txt', false);
-            rawFile.onreadystatechange = function () {
-                if (rawFile.readyState === 4) {
-                    if (rawFile.status === 200 || rawFile.status == 0) {
-                        var allText = rawFile.responseText;
-                        var textAreaTag = document.getElementById("output")
-                        textAreaTag.innerHTML = allText
-                    }
-                }
-            }
-            rawFile.send(null);
-        }
-    </script>
+    <script src="index.js"></script>
 </head>
 <body>
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container background-app">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light gameHeaderWindow">
         <a class="navbar-brand" href="#">Sign Language Game</a>
-        <button class="btn btn-primary" onclick="readTextFile()" type="button">
-            Start Game
-        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <button class="btn btn-primary button-position" onclick="readTextFile()" type="button">
+                Start Game
+            </button>
+            <button class="btn btn-secondary button-position" onclick="clearWindow()" type="button"
+                    style="margin-left: 1rem">
+                Clear Window
+            </button>
+            <button class="btn btn-success button-position" onclick="sendOnCommand()" type="button"
+                    style="margin-left: 1rem">
+                Start Py Script
+            </button>
+            <button class="btn btn-danger button-position" onclick="sendOffCommand()" type="button"
+                    style="margin-left: 1rem">
+                Stop Py Script
+            </button>
+        </div>
     </nav>
     <form>
-        <div class="form-group">
-            <textarea id="output" class="outputWindow">
+        <div class="form-group view-margin">
+            <textarea id="output" class="form-control" rows="15">
   </textarea>
         </div>
     </form>
