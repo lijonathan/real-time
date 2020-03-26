@@ -5,8 +5,15 @@ function readTextFile() {
         if (rawFile.readyState === 4) {
             if (rawFile.status === 200 || rawFile.status == 0) {
                 const allText = rawFile.responseText;
-                const textAreaTag = document.getElementById("output");
-                textAreaTag.innerHTML = allText
+                var patt = /true/g;
+                var switcher = allText.match(patt);
+                if(switcher == "true"){
+                    alert("true")
+                }else {
+                    alert("false")
+                }
+                // const textAreaTag = document.getElementById("output");
+                // textAreaTag.innerHTML = allText
             }
         }
     }
