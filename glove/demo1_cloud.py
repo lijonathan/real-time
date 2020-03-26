@@ -48,12 +48,27 @@ class CallbackContainer(object):
         self.imu_orient_z = 0
         self.imu_orient_x = 0
         self.imu_orient_y = 0
+        self.flex_index = 0
+        self.flex_middle = 0
+        self.flex_ring = 0
+        self.flex_pinky = 0
+        self.flex_thumb = 0
+
+
     # Custom MQTT message callback
     def customCallback(self, client, userdata, message):
         topicContents = json.loads(message.payload.decode('utf-8'))
         self.imu_orient_x = topicContents['state']['reported']['imu_x']
         self.imu_orient_y = topicContents['state']['reported']['imu_y']
         self.imu_orient_z = topicContents['state']['reported']['imu_z']
+
+        self.flex_index = topicContents['state']['reported']['flex_index']
+        self.flex_middle = topicContents['state']['reported']['flex_mid']
+        self.flex_ring = topicContents['state']['reported']['flex_ring']
+        self.flex_pinky = topicContents['state']['reported']['flex_pinky']
+        self.flex_thumb = topicContents['state']['reported']['flex_thumb']
+
+
         print(topicContents)
         print("\n\n\n")
 
@@ -65,6 +80,23 @@ class CallbackContainer(object):
 
     def getz(self):
         return self.imu_orient_z
+
+    def get_flex_index(self):
+        return self.flex_index
+
+    def get_flex_middle(self):
+        return self.flex_middle
+
+    def get_flex_ring(self):
+        return self.flex_ring
+
+    def get_flex_pinky(self):
+        return self.flex_pinky
+
+    def get_flex_thumb(self):
+        return self.flex_thumb
+
+
 
 # Connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
@@ -126,8 +158,20 @@ time.sleep(2)
 while True:
 
 
+    X = []
+    data_pt = []
+    data_pt.append(mmyCallbackContainer.getx())
+    data_pt.append(mmyCallbackContainer.gety())
+    data_pt.append(mmyCallbackContainer.getz())
 
-	X_data = []
+    data_pt.append(mmyCallbackContainer.get_flex_index())
+    data_pt.append(mmyCallbackContainer.get_flex_middle())
+    data_pt.append(mmyCallbackContainer.get_flex_ring())
+    data_pt.append(mmyCallbackContainer.get_flex_pinky())
+    data_pt.append(mmyCallbackContainer.get_flex_thumb())
+
+    '''
+    X_data = []
     X_input = []
     vals_input = message["state"]["reported"]
 
@@ -146,10 +190,10 @@ while True:
     X_input.append(3.234)
     X_input.append(1.23)
     X_input.append(3.21)
-
-    print(X_input)
-    X_data.append(X_input)
-    res = rf.predict(X_data)
+    '''
+    print(data_pt)
+    X.append(data_pt)
+    res = rf.predict(X)
 
 
     myAWSIoTMQTTClient.publish(sensorDataTopic, res, 1)
