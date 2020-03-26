@@ -118,7 +118,7 @@ def mapFlexToPercent(x, in_min, in_max):
 while True:
     if(myCallbackContainer.getState()):
         imu_orient = sensor.euler
-        imu_accel = sensor.acceleration
+        #imu_accel = sensor.acceleration
 
         flex_index = mapFlexToPercent(chan0.voltage, 1.87, 2.57)
         flex_mid = mapFlexToPercent(chan0.voltage, 2.02, 2.65)
@@ -137,9 +137,9 @@ while True:
         message['state']['reported']['imu_x'] = imu_orient[0]
         message['state']['reported']['imu_y'] = imu_orient[1]
         message['state']['reported']['imu_z'] = imu_orient[2]
-        message['state']['reported']['imu_accel_x'] = imu_accel[0]
-        message['state']['reported']['imu_accel_y'] = imu_accel[1]
-        message['state']['reported']['imu_accel_z'] = imu_accel[2]
+        #message['state']['reported']['imu_accel_x'] = imu_accel[0]
+        #message['state']['reported']['imu_accel_y'] = imu_accel[1]
+        #message['state']['reported']['imu_accel_z'] = imu_accel[2]
         messageJson = json.dumps(message)
 
         myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)
