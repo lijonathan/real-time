@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 '''
 * CSE520 Real-Time Systems
 * Demo 1 Glove Sensor Data Collection Service
@@ -8,6 +9,7 @@
 
 # Import utility libs
 import time
+import os
 # Import AWS IoT Core libs
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
@@ -41,9 +43,10 @@ class CallbackContainer(object):
 
 # Connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
-rootCAPath = "certs/root-CA.crt"
-certificatePath = "certs/2db4660fce-certificate.pem.crt"
-privateKeyPath = "certs/2db4660fce-private.pem.key"
+scriptPath = os.path.dirname(os.path.realpath(__file__))
+rootCAPath = os.path.join(scriptPath, "certs/root-CA.crt")
+certificatePath = os.path.join(scriptPath, "certs/2db4660fce-certificate.pem.crt")
+privateKeyPath = os.path.join(scriptPath, "certs/2db4660fce-private.pem.key")
 port = 8883
 clientId = "glove"
 sensorDataTopic = "$aws/things/sensor_glove/shadow/update"
@@ -95,20 +98,42 @@ chan2 = AnalogIn(mcp, MCP.P2)
 chan3 = AnalogIn(mcp, MCP.P3)
 chan4 = AnalogIn(mcp, MCP.P4)
 
+# Function to convert received analog voltage to percentage flex
+def mapFlexToPercent(x, in_min, in_max):
+    out_min = 0
+    out_max = 100
+
+    mappedVal = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+
+    # Bounding
+    if (mappedVal < out_min):
+        mappedVal = out_min
+    elif (mappedVal > out_max):
+        mappedVal = out_max
+
+    # Flip percent (was 100=no flex, now 100=max flex)
+    return (mappedVal-100) * -1
+
 # Publish to sensor data sensorDataTopic when start sensorDataTopic is received until control sensorDataTopic says stop
 while True:
     if(myCallbackContainer.getState()):
         imu_orient = sensor.euler
         imu_accel = sensor.acceleration
-        
+
+        flex_index = mapFlexToPercent(chan0.voltage, 1.87, 2.57)
+        flex_mid = mapFlexToPercent(chan0.voltage, 2.02, 2.65)
+        flex_ring = mapFlexToPercent(chan0.voltage, 2.18, 2.76)
+        flex_pinky = mapFlexToPercent(chan0.voltage, 1.71, 2.54)
+        flex_thumb = mapFlexToPercent(chan0.voltage, 1.35, 2.07)
+
         message = {}
         message['state'] = {}
         message['state']['reported'] = {}
-        message['state']['reported']['flex_index'] = chan0.value
-        message['state']['reported']['flex_middle'] = chan1.value
-        message['state']['reported']['flex_ring'] = chan2.value
-        message['state']['reported']['flex_pinky'] = chan3.value
-        message['state']['reported']['flex_thumb'] = chan4.value
+        message['state']['reported']['flex_index'] = flex_index
+        message['state']['reported']['flex_middle'] = flex_mid
+        message['state']['reported']['flex_ring'] = flex_ring
+        message['state']['reported']['flex_pinky'] = flex_pinky
+        message['state']['reported']['flex_thumb'] = flex_thumb
         message['state']['reported']['imu_x'] = imu_orient[0]
         message['state']['reported']['imu_y'] = imu_orient[1]
         message['state']['reported']['imu_z'] = imu_orient[2]
@@ -116,7 +141,7 @@ while True:
         message['state']['reported']['imu_accel_y'] = imu_accel[1]
         message['state']['reported']['imu_accel_z'] = imu_accel[2]
         messageJson = json.dumps(message)
-        
+
         myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)
 
     time.sleep(1)
