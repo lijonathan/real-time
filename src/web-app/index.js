@@ -1,19 +1,39 @@
-var pythonDataFile = 'hand_data.txt'
-
-function readTextFile(pythonDataFile)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", pythonDataFile, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
+function readTextFile() {
+    const rawFile = new XMLHttpRequest();
+    rawFile.open("GET", 'hand_data.txt', true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                const allText = rawFile.responseText;
+                const textAreaTag = document.getElementById("output");
+                textAreaTag.innerHTML = allText
             }
         }
     }
     rawFile.send(null);
+}
+function clearWindow() {
+    const textAreaTag = document.getElementById("output");
+    textAreaTag.innerText = ""
+}
+
+function sendOnCommand() {
+    $.ajax({
+        type: "GET",
+        url: "../../glove/glove_start.py",
+        success: callbackFunc
+    });
+
+}
+function sendOffCommand() {
+    $.ajax({
+        type: "POST",
+        url: "../../glove/glove_stop.py",
+        success: callbackFunc
+    });
+
+}
+
+function callbackFunc(response) {
+    console.log(response);
 }

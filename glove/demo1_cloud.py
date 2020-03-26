@@ -25,7 +25,7 @@ from sklearn.ensemble import RandomForestClassifier
 import json
 
 
-with open ("..\\src\\web-app\\misc\\fabData.json") as json_file:
+with open ("../src/web-app/misc/fabData.json") as json_file:
     data = json.load(json_file)
 
 X = []
@@ -36,7 +36,7 @@ for data_pt in data:
     result = data_pt["result"]
     Y.append(result)
 
-
+print(X)
 rf = RandomForestClassifier()
 print(X)
 rf.fit(X, Y)
@@ -126,16 +126,30 @@ time.sleep(2)
 while True:
 
 
+
 	X_data = []
     X_input = []
     vals_input = message["state"]["reported"]
 
-    X_input.append(myCallbackContainer.getx())
-    X_input.append(myCallbackContainer.gety())
-    X_input.append(myCallbackContainer.getz())
-    
+    X_data = []
+    X_input = []
+    #vals_input = message["state"]["reported"]
+
+    X_input.append(-14.11)
+    X_input.append(19.34)
+    X_input.append(23.11)
+    X_input.append(-13.23)
+    X_input.append(4.321)
+    X_input.append(.234)
+    X_input.append(8.324)
+    X_input.append(12.12)
+    X_input.append(3.234)
+    X_input.append(1.23)
+    X_input.append(3.21)
+
+    print(X_input)
     X_data.append(X_input)
-    res = rf.pred(X_data)
+    res = rf.predict(X_data)
 
 
     myAWSIoTMQTTClient.publish(sensorDataTopic, res, 1)
