@@ -38,6 +38,7 @@ for data_pt in data:
 
 
 rf = RandomForestClassifier()
+print(X)
 rf.fit(X, Y)
 
 class CallbackContainer(object):
@@ -124,6 +125,8 @@ time.sleep(2)
 # Publish to sensor data sensorDataTopic when start sensorDataTopic is received until control sensorDataTopic says stop
 while True:
 
+
+	X_data = []
     X_input = []
     vals_input = message["state"]["reported"]
 
@@ -131,7 +134,8 @@ while True:
     X_input.append(myCallbackContainer.gety())
     X_input.append(myCallbackContainer.getz())
     
-    res = rf.pred(X_input)
+    X_data.append(X_input)
+    res = rf.pred(X_data)
 
 
     myAWSIoTMQTTClient.publish(sensorDataTopic, res, 1)
