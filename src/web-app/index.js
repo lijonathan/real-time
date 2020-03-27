@@ -5,20 +5,32 @@ function readTextFile() {
         if (rawFile.readyState === 4) {
             if (rawFile.status === 200 || rawFile.status == 0) {
                 const allText = rawFile.responseText;
-                var patt = /true/g;
-                var switcher = allText.match(patt);
-                if(switcher == "true"){
-                    alert("true")
-                }else {
-                    alert("false")
-                }
-                // const textAreaTag = document.getElementById("output");
-                // textAreaTag.innerHTML = allText
+                const textAreaTag = document.getElementById("output");
+                textAreaTag.innerHTML = allText
             }
         }
     }
     rawFile.send(null);
 }
+
+// function readTextFile() {
+//     jQuery.get("hand_data.txt", function (returnedData) {
+//         $("#output").text(returnedData);
+//     }, "text/plain");
+// };
+
+function findTrue() {
+    const str = document.getElementById("output").innerText;
+    const switcher = str.search(/true/g);
+    if(switcher === -1){
+        alert("False")
+        document.getElementById("indicator").style.fill = "red";
+    } else{
+        alert("True")
+        document.getElementById("indicator").style.fill = "green";
+    }
+}
+
 function clearWindow() {
     const textAreaTag = document.getElementById("output");
     textAreaTag.innerText = ""

@@ -5,11 +5,18 @@
 .button-position {
   float: right;
 }
-.view-margin {
-  margin: 5rem;
-}
 .background-app {
   background-color: #F5F5F5;
+  height: 100%;
 }
 
+.output-display {
+  word-wrap: break-word;
+  height: 28px;
+  width: 400px;
+}
+.indicator {
+  stroke: black;
+  stroke-width: 2
+}
 

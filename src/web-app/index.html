@@ -17,6 +17,9 @@
             <button class="btn btn-primary button-position" onclick="readTextFile()" type="button">
                 Start Game
             </button>
+            <button class="btn btn-primary button-position" onclick="findTrue()" type="button">
+                Start Search
+            </button>
             <button class="btn btn-secondary button-position" onclick="clearWindow()" type="button"
                     style="margin-left: 1rem">
                 Clear Window
@@ -33,9 +36,12 @@
     </nav>
     <form>
         <div class="form-group view-margin">
-            <textarea id="output" class="form-control" rows="15">
-  </textarea>
+            <div id="output" class="form-control">
+            </div>
         </div>
     </form>
+    <svg id="circle-svg">
+        <circle id="indicator" r="40" cx="50" cy="50"/>
+    </svg>
 </div>
 </body>

@@ -1,1 +1,12 @@
-true
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
+git
