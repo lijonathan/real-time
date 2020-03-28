@@ -14,12 +14,6 @@ function readTextFile() {
     rawFile.send(null);
 }
 
-// function readTextFile() {
-//     jQuery.get("hand_data.txt", function (returnedData) {
-//         $("#output").text(returnedData);
-//     }, "text/plain");
-// };
-
 function findTrue() {
     const str = document.getElementById("output").innerText;
     const switcher = str.search(/true/g);
@@ -46,19 +40,23 @@ function clearWindow() {
 }
 
 function sendOnCommand() {
-    $.ajax({
+    const jqXHR = $.ajax({
         type: "POST",
         url: "../../glove/glove_start.py",
-        success: callbackFunc
+        async: false,
     });
+    const textAreaTag = document.getElementById("output");
+    textAreaTag.innerHTML = jqXHR.responseText
 
 }
 function sendOffCommand() {
-    $.ajax({
+    const jqXHR = $.ajax({
         type: "POST",
         url: "../../glove/glove_stop.py",
-        success: callbackFunc
+        async: false,
     });
+    const textAreaTag = document.getElementById("output");
+    textAreaTag.innerHTML = jqXHR.responseText
 
 }
 

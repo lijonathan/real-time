@@ -16,6 +16,7 @@
         "jasmine-core": "2.99.1",
         "jasmine-marbles": "0.6.0",
         "jquery": "^3.4.1",
+        "python-shell": "^1.0.8",
         "rxjs": "6.5.4",
         "tslib": "1.10.0",
         "web-animations-js": "2.3.2",
