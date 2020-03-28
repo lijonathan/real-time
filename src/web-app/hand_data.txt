@@ -1,12 +1,6 @@
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-b'{"state": {"reported": {"imu_z": 0, "imu_y": 0, "imu_x": 0}}}'
-git
+b'{"state": {"reported": {"letter": a, "answer": false}}}
+b'{"state": {"reported": {"letter": a, "answer": false}}}
+b'{"state": {"reported": {"letter": a, "answer": false}}}
+b'{"state": {"reported": {"letter": a, "answer": false}}}
+b'{"state": {"reported": {"letter": a, "answer": false}}}
+b'{"state": {"reported": {"letter": a, "answer": false}}}

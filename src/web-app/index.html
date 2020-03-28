@@ -17,7 +17,8 @@
             <button class="btn btn-primary button-position" onclick="readTextFile()" type="button">
                 Start Game
             </button>
-            <button class="btn btn-primary button-position" onclick="findTrue()" type="button">
+            <button class="btn btn-warning button-position" onclick="findTrue()" type="button"
+                    style="margin-left: 1rem">
                 Start Search
             </button>
             <button class="btn btn-secondary button-position" onclick="clearWindow()" type="button"
@@ -34,14 +35,13 @@
             </button>
         </div>
     </nav>
+    <br/>
+    <div class="alert alert-primary display-margin" role="alert" id="letter-generator">Sign The Letter:</div>
+    <div class="alert alert-warning display-margin" role="alert" id="response-text">Waiting For Response</div>
     <form>
-        <div class="form-group view-margin">
-            <div id="output" class="form-control">
-            </div>
+        <div id="output" class="terminal-response">
         </div>
     </form>
-    <svg id="circle-svg">
-        <circle id="indicator" r="40" cx="50" cy="50"/>
-    </svg>
+    <br/>
 </div>
 </body>

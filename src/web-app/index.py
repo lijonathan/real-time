@@ -14,6 +14,7 @@ def customCallback(client, userdata, message):
     print(message.payload)
     with open ("hand_data.txt", 'a') as data_file:
         data_file.write(str(message.payload))
+        data_file.write(str('b\'{\"state\": {\"reported\": {\"letter\": a, "answer": false}}}\''))
         data_file.write("\n")
     #print("from topic: ", hand_data)
     #print(message.topic)
