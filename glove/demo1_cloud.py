@@ -24,21 +24,41 @@ import json
 from sklearn.ensemble import RandomForestClassifier
 import json
 
-
+'''
 with open ("../src/web-app/misc/fabData.json") as json_file:
     data = json.load(json_file)
+'''
 
 X = []
 Y = []
-for data_pt in data:
-    vals = data_pt["state"]["reported"]
-    X.append(list(vals.values()))
-    result = data_pt["result"]
-    Y.append(result)
+# (a) training data
+for x in range(1, 5):
+    file = "./training_data/a_sample" + str(x) + ".csv"    
+    with open(file) as data_file:
+        for line in data_file:
+            data = line.split(",")
+            del(data[8])
+            for i in range(0, len(data)):
+                data[i] = float(data[i])
+            X.append(data)
+            Y.append("a")
 
-print(X)
+# (b) training data
+for x in range(1, 5):
+    file = "./training_data/b_sample" + str(x) + ".csv"    
+    with open(file) as data_file:
+        for line in data_file:
+            data = line.split(",")
+            del(data[8])
+            for i in range(0, len(data)):
+                data[i] = float(data[i])
+            X.append(data)
+            Y.append("b")
+
+#print(X)
+print(Y)
 rf = RandomForestClassifier()
-print(X)
+#print(X)
 rf.fit(X, Y)
 
 class CallbackContainer(object):
@@ -158,7 +178,7 @@ time.sleep(2)
 while True:
 
 
-    X = []
+    X_received = []
     data_pt = []
     data_pt.append(mmyCallbackContainer.getx())
     data_pt.append(mmyCallbackContainer.gety())
@@ -192,8 +212,8 @@ while True:
     X_input.append(3.21)
     '''
     print(data_pt)
-    X.append(data_pt)
-    res = rf.predict(X)
+    X_received.append(data_pt)
+    res = rf.predict(X_received)
 
 
     myAWSIoTMQTTClient.publish(sensorDataTopic, res, 1)
