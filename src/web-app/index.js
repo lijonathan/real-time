@@ -18,7 +18,7 @@ function findA() {
     numGenHeader.innerText = "Sign The Letter: A";
     const str = document.getElementById("output").innerText;
     // const switcher = str.search(/true/g);
-    const tempValue = str.search(/"letter": a/g);  //to match letter to what I have
+    const tempValue = str.search(/a/g);  //to match letter to what I have
     switcher(tempValue);
 }
 
@@ -27,7 +27,7 @@ function findB() {
     numGenHeader.innerText = "Sign The Letter: B";
     const str = document.getElementById("output").innerText;
     // const switcher = str.search(/true/g);
-    const tempValue = str.search(/"letter": b/g);  //to match letter to what I have
+    const tempValue = str.search(/b/g);  //to match letter to what I have
     switcher(tempValue);
 }
 

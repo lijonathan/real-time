@@ -1,6 +1,0 @@
-b'{"state": {"reported": {"letter": a, "answer": false}}}
-b'{"state": {"reported": {"letter": a, "answer": false}}}
-b'{"state": {"reported": {"letter": a, "answer": false}}}
-b'{"state": {"reported": {"letter": a, "answer": false}}}
-b'{"state": {"reported": {"letter": a, "answer": false}}}
-b'{"state": {"reported": {"letter": a, "answer": false}}}
