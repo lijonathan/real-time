@@ -1,5 +1,4 @@
 function readTextFile() {
-    letterGenerator();
     const rawFile = new XMLHttpRequest();
     rawFile.open("GET", 'hand_data.txt', true);
     rawFile.onreadystatechange = function () {
@@ -14,19 +13,35 @@ function readTextFile() {
     rawFile.send(null);
 }
 
-function findTrue() {
+function findA() {
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: A";
     const str = document.getElementById("output").innerText;
-    const switcher = str.search(/true/g);
-    // const switcher = str.search(/"letter": a/g);  //to match letter to what I have
-    if(switcher === -1){
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/a/g);  //to match letter to what I have
+    switcher(tempValue);
+}
+
+function findB() {
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: B";
+    const str = document.getElementById("output").innerText;
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/b/g);  //to match letter to what I have
+    switcher(tempValue);
+}
+
+function switcher(value) {
+    if (value === -1) {
         const falseDiv = document.getElementById("response-text");
         falseDiv.className = "alert alert-danger display-margin";
         falseDiv.innerText = "You Are Incorrect"
-    } else{
+    } else {
         const trueDiv = document.getElementById("response-text");
         trueDiv.className = "alert alert-success display-margin";
         trueDiv.innerText = "You Got It!"
     }
+
 }
 
 function clearWindow() {
@@ -49,6 +64,7 @@ function sendOnCommand() {
     textAreaTag.innerHTML = jqXHR.responseText
 
 }
+
 function sendOffCommand() {
     const jqXHR = $.ajax({
         type: "POST",
@@ -57,12 +73,6 @@ function sendOffCommand() {
     });
     const textAreaTag = document.getElementById("output");
     textAreaTag.innerHTML = jqXHR.responseText
-
-}
-
-function letterGenerator(){
-    const numGenHeader = document.getElementById("letter-generator");
-    numGenHeader.innerText = "Sign The Letter: A";
 
 }
 
