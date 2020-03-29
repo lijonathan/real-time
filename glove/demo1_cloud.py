@@ -214,8 +214,8 @@ while True:
     print(data_pt)
     X_received.append(data_pt)
     res = rf.predict(X_received)
-
-
-    myAWSIoTMQTTClient.publish(sensorDataTopic, res, 1)
+    
+    send_result = res[0]
+    myAWSIoTMQTTClient.publish(sensorDataTopic, send_result, 1)
 
     time.sleep(1)
