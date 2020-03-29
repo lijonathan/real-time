@@ -10,19 +10,24 @@
 # Import utility libs
 import time
 import sys
-# Import Adafruit base libs
-import board
+# Import LED lib
+from gpiozero import LED
+# Import BNO055 lib
+from Adafruit_BNO055 import BNO055
+# Import MCP3008 libs
 import busio
 import digitalio
-# Import BNO055 lib
-import adafruit_bno055
-# Import MCP3008 libs
+import board
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 
-# Create BNO055 device
-i2c = busio.I2C(board.SCL, board.SDA)
-sensor = adafruit_bno055.BNO055(i2c)
+# Create LED
+led = LED(12)
+
+# Create and init BNO055 device
+bno = BNO055.BNO055(serial_port='/dev/serial0', rst=13)
+if not bno.begin():
+    raise RuntimeError('Failed to initialize BNO055!')
 
 # Setup MCP3008
 ## Create the spi bus
@@ -31,7 +36,7 @@ spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 cs = digitalio.DigitalInOut(board.D5)
 ## Create the mcp object
 mcp = MCP.MCP3008(spi, cs)
-## Create an analog input channels
+## Create analog input channels
 chan0 = AnalogIn(mcp, MCP.P0)
 chan1 = AnalogIn(mcp, MCP.P1)
 chan2 = AnalogIn(mcp, MCP.P2)
@@ -60,12 +65,42 @@ output_file = open(str(sys.argv[1]), 'w')
 # Get classification of data from command line to tag captured data with
 data_class = str(sys.argv[2])
 
-i = 0
+# Calibrate BNO055
+print('Calibrating BNO055')
+cal = False
+timeout = 0
+while (cal == False):
+    # Timeout and reset device if not calibrated within 60 seconds
+    if (timeout > 240):
+        if not bno.begin():
+            raise RuntimeError('Failed to initialize BNO055!')
+        print('BNO055 reset due to calibration timeout')
+        timeout = 0
+    else:
+        timeout += 1
 
-# Writes N samples of sensor data to file
-while i<10:
+    cal_array = bno.get_calibration_status()
+
+    if ((timeout % 4) == 0):
+        print('Calibration Status: ' + str(cal_array) + '\n')
+
+    if (cal_array[0] == cal_array[1] == cal_array[2] == cal_array[3] == 3):
+        cal = True
+        led.on()
+
+    time.sleep(0.25)
+
+# Wait 10 seconds to allow user to get in position, blinking LED for final 3 seconds
+time.sleep(7)
+led.blink(0.25, 0.25, None, True)
+time.sleep(3)
+led.off()
+
+i = 0
+# Writes 250 samples of sensor data to file at 4Hz
+while i<250:
     # Get sensor data
-    imu_orient = sensor.euler
+    imu_orient = bno.read_euler()
 
     flex_index = mapFlexToPercent(chan0.voltage, 1.87, 2.57)
     flex_mid = mapFlexToPercent(chan0.voltage, 2.02, 2.65)
@@ -78,6 +113,6 @@ while i<10:
 
     i += 1
 
-    time.sleep(1)
+    time.sleep(0.25)
 
 output_file.close()
