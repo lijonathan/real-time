@@ -83,7 +83,7 @@ class CallbackContainer(object):
         self.imu_orient_z = topicContents['state']['reported']['imu_z']
 
         self.flex_index = topicContents['state']['reported']['flex_index']
-        self.flex_middle = topicContents['state']['reported']['flex_mid']
+        self.flex_middle = topicContents['state']['reported']['flex_middle']
         self.flex_ring = topicContents['state']['reported']['flex_ring']
         self.flex_pinky = topicContents['state']['reported']['flex_pinky']
         self.flex_thumb = topicContents['state']['reported']['flex_thumb']
@@ -216,6 +216,7 @@ while True:
     res = rf.predict(X_received)
     
     send_result = res[0]
+    print(send_result)
     myAWSIoTMQTTClient.publish(sensorDataTopic, send_result, 1)
 
     time.sleep(1)
