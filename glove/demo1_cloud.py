@@ -180,15 +180,15 @@ while True:
 
     X_received = []
     data_pt = []
-    data_pt.append(mmyCallbackContainer.getx())
-    data_pt.append(mmyCallbackContainer.gety())
-    data_pt.append(mmyCallbackContainer.getz())
+    data_pt.append(myCallbackContainer.getx())
+    data_pt.append(myCallbackContainer.gety())
+    data_pt.append(myCallbackContainer.getz())
 
-    data_pt.append(mmyCallbackContainer.get_flex_index())
-    data_pt.append(mmyCallbackContainer.get_flex_middle())
-    data_pt.append(mmyCallbackContainer.get_flex_ring())
-    data_pt.append(mmyCallbackContainer.get_flex_pinky())
-    data_pt.append(mmyCallbackContainer.get_flex_thumb())
+    data_pt.append(myCallbackContainer.get_flex_index())
+    data_pt.append(myCallbackContainer.get_flex_middle())
+    data_pt.append(myCallbackContainer.get_flex_ring())
+    data_pt.append(myCallbackContainer.get_flex_pinky())
+    data_pt.append(myCallbackContainer.get_flex_thumb())
 
     '''
     X_data = []
