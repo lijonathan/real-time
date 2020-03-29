@@ -13,8 +13,10 @@ def customCallback(client, userdata, message):
     #print("Received a new message: ", hand_data)
     print(message.payload)
     with open ("hand_data.txt", 'a') as data_file:
-        data_file.write(str(message.payload))
-        data_file.write(str('b\'{\"state\": {\"reported\": {\"letter\": a, "answer": false}}}\''))
+        write_line = str(message.payload)
+        write_line = write_line.strip("b")
+        data_file.write(write_line)
+        #data_file.write(str('b\'{\"state\": {\"reported\": {\"letter\": a, "answer": false}}}\''))
         data_file.write("\n")
     #print("from topic: ", hand_data)
     #print(message.topic)
