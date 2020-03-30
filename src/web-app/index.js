@@ -1,34 +1,39 @@
 function readTextFile() {
-    const rawFile = new XMLHttpRequest();
-    rawFile.open("GET", 'hand_data.txt', true);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-                const allText = rawFile.responseText;
-                const textAreaTag = document.getElementById("output");
-                textAreaTag.innerHTML = allText
+    let i = 0;
+    while(i < 1000) {
+        const rawFile = new XMLHttpRequest();
+        rawFile.open("GET", 'hand_data.txt', true);
+        rawFile.onreadystatechange = function () {
+            if (rawFile.readyState === 4) {
+                if (rawFile.status === 200 || rawFile.status == 0) {
+                    const allText = rawFile.responseText;
+                    const textAreaTag = document.getElementById("output");
+                    textAreaTag.innerHTML = allText
+                }
             }
-        }
-    };
-    rawFile.send(null);
+        };
+        rawFile.send(null);
+        ++i;
+        console.log("Looping " + i + "Times")
+    }
 }
 
 function findA() {
-    const numGenHeader = document.getElementById("letter-generator");
-    numGenHeader.innerText = "Sign The Letter: A";
-    const str = document.getElementById("output").innerText;
-    // const switcher = str.search(/true/g);
-    const tempValue = str.search(/a/g);  //to match letter to what I have
-    switcher(tempValue);
+        const numGenHeader = document.getElementById("letter-generator");
+        numGenHeader.innerText = "Sign The Letter: A";
+        const str = document.getElementById("output").innerText;
+        // const switcher = str.search(/true/g);
+        const tempValue = str.search(/a/g);  //to match letter to what I have
+        switcher(tempValue);
 }
 
 function findB() {
-    const numGenHeader = document.getElementById("letter-generator");
-    numGenHeader.innerText = "Sign The Letter: B";
-    const str = document.getElementById("output").innerText;
-    // const switcher = str.search(/true/g);
-    const tempValue = str.search(/b/g);  //to match letter to what I have
-    switcher(tempValue);
+        const numGenHeader = document.getElementById("letter-generator");
+        numGenHeader.innerText = "Sign The Letter: B";
+        const str = document.getElementById("output").innerText;
+        // const switcher = str.search(/true/g);
+        const tempValue = str.search(/b/g);  //to match letter to what I have
+        switcher(tempValue);
 }
 
 function switcher(value) {
@@ -52,6 +57,8 @@ function clearWindow() {
     const messageDiv = document.getElementById("response-text");
     messageDiv.className = "alert alert-warning display-margin";
     messageDiv.innerText = "Waiting For Response";
+    const fs = require('fs')
+    fs.truncate('hand_data.txt', 0, function(){console.log('done')})
 }
 
 function sendOnCommand() {
