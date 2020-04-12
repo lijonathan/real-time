@@ -22,10 +22,10 @@ import os
 X = []
 Y = []
 
-onlyfiles = [f for f in listdir("./training_data") if isfile(join("./training_data", f))]
+onlyfiles = [f for f in listdir("../glove/training_data") if isfile(join("../glove/training_data", f))]
 
 for i in range(0, len(onlyfiles)):
-    onlyfiles[i] = os.path.join("./training_data", onlyfiles[i])
+    onlyfiles[i] = os.path.join("../glove/training_data", onlyfiles[i])
 
 for i in range(0, len(onlyfiles)):
     with open(onlyfiles[i]) as data_file:
@@ -106,9 +106,9 @@ class CallbackContainer(object):
 
 # Connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
-rootCAPath = "certs/root-CA.crt"
-certificatePath = "certs/2db4660fce-certificate.pem.crt"
-privateKeyPath = "certs/2db4660fce-private.pem.key"
+rootCAPath = "../glove/certs/root-CA.crt"
+certificatePath = "../glove/certs/2db4660fce-certificate.pem.crt"
+privateKeyPath = "../glove/certs/2db4660fce-private.pem.key"
 port = 8883
 clientId = "cloud_Ec2"
 sensorDataTopic = "$aws/things/processed_data/shadow/update"
