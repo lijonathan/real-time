@@ -66,29 +66,9 @@ output_file = open(str(sys.argv[1]), 'w')
 data_class = str(sys.argv[2])
 
 # Calibrate BNO055
-print('Calibrating BNO055')
-cal = False
-timeout = 0
-while (cal == False):
-    # Timeout and reset device if not calibrated within 60 seconds
-    if (timeout > 240):
-        if not bno.begin():
-            raise RuntimeError('Failed to initialize BNO055!')
-        print('BNO055 reset due to calibration timeout')
-        timeout = 0
-    else:
-        timeout += 1
-
-    cal_array = bno.get_calibration_status()
-
-    if ((timeout % 4) == 0):
-        print('Calibration Status: ' + str(cal_array) + '\n')
-
-    if (cal_array[0] == cal_array[1] == cal_array[2] == cal_array[3] == 3):
-        cal = True
-        led.on()
-
-    time.sleep(0.25)
+cal_data = open('bno055_cal.dat', 'rb')
+bno.set_calibration(cal_data.read())
+print('Calibration data loaded. Get in position!')
 
 # Wait 10 seconds to allow user to get in position, blinking LED for final 3 seconds
 time.sleep(7)
