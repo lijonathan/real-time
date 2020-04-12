@@ -1,9 +1,10 @@
 '''
 * CSE520 Real-Time Systems
-* Demo 1 Glove Sensor Data Collection Service
-* Jeremy Manin
+* Cloud ML processing of data sent from glove
+* Jonathan Li
 *
-* Created with help from sample code from AWS and Adafruit
+* Created with help from sample code from AWS
+* Random Forest Classifier
 '''
 
 # Import utility libs
