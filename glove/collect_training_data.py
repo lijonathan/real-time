@@ -83,10 +83,10 @@ while i<250:
     imu_orient = bno.read_euler()
 
     flex_index = mapFlexToPercent(chan0.voltage, 1.87, 2.57)
-    flex_mid = mapFlexToPercent(chan0.voltage, 2.02, 2.65)
-    flex_ring = mapFlexToPercent(chan0.voltage, 2.18, 2.76)
-    flex_pinky = mapFlexToPercent(chan0.voltage, 1.71, 2.54)
-    flex_thumb = mapFlexToPercent(chan0.voltage, 1.35, 2.07)
+    flex_mid = mapFlexToPercent(chan1.voltage, 2.02, 2.65)
+    flex_ring = mapFlexToPercent(chan2.voltage, 2.18, 2.76)
+    flex_pinky = mapFlexToPercent(chan3.voltage, 1.71, 2.54)
+    flex_thumb = mapFlexToPercent(chan4.voltage, 1.35, 2.07)
 
     # Output to file in format "x,y,z,index,middle,ring,pinky,thumb,class"
     output_file.write(str(imu_orient[0]) + ',' + str(imu_orient[1]) + ',' + str(imu_orient[2]) + ',' + str(flex_index) + ',' + str(flex_mid) + ',' + str(flex_ring) + ',' + str(flex_pinky) + ',' + str(flex_thumb) + ',' + data_class + '\n')
