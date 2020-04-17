@@ -14,26 +14,61 @@ function readTextFile() {
         };
         rawFile.send(null);
         ++i;
-        console.log("Looping " + i + "Times")
     }
 }
 
 function findA() {
-        const numGenHeader = document.getElementById("letter-generator");
-        numGenHeader.innerText = "Sign The Letter: A";
-        const str = document.getElementById("output").innerText;
-        // const switcher = str.search(/true/g);
-        const tempValue = str.search(/a/g);  //to match letter to what I have
-        switcher(tempValue);
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: A";
+    const str = document.getElementById("output").innerText;
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/a/g);  //to match letter to what I have
+    switcher(tempValue);
 }
 
 function findB() {
-        const numGenHeader = document.getElementById("letter-generator");
-        numGenHeader.innerText = "Sign The Letter: B";
-        const str = document.getElementById("output").innerText;
-        // const switcher = str.search(/true/g);
-        const tempValue = str.search(/b/g);  //to match letter to what I have
-        switcher(tempValue);
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: B";
+    const str = document.getElementById("output").innerText;
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/b/g);  //to match letter to what I have
+    switcher(tempValue);
+}
+
+function findC() {
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: C";
+    const str = document.getElementById("output").innerText;
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/c/g);  //to match letter to what I have
+    switcher(tempValue);
+}
+
+function findD() {
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: D";
+    const str = document.getElementById("output").innerText;
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/d/g);  //to match letter to what I have
+    switcher(tempValue);
+}
+
+function findE() {
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: E";
+    const str = document.getElementById("output").innerText;
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/e/g);  //to match letter to what I have
+    switcher(tempValue);
+}
+
+function findF() {
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter: F";
+    const str = document.getElementById("output").innerText;
+    // const switcher = str.search(/true/g);
+    const tempValue = str.search(/f/g);  //to match letter to what I have
+    switcher(tempValue);
 }
 
 function switcher(value) {
