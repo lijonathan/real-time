@@ -1,11 +1,14 @@
+import time
+import os
 from os.path import isfile, join
 from os import listdir
-from sklearn.ensemble import RandomForestClassifier, KNeighbborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 
+start_time = time.time()
 
-
-onlyfiles = [f for f in listdir("../glove/training_data") if isfile(join"../glove/training_data", f)]
+onlyfiles = [f for f in listdir("../glove/training_data") if isfile(join("../glove/training_data", f))]
 
 for i in range(0, len(onlyfiles)):
     onlyfiles[i] = os.path.join("../glove/training_data", onlyfiles[i])
@@ -28,35 +31,40 @@ for i in range(0, len(onlyfiles)):
             Y.append(result)
 
 
-val_range = []
-for i in range(1, 251):
-	val_range.append(i * 5)
+def display(results):
+    print(f'{results.best_params_}\n')
 
+
+print("RF Start")
 rf = RandomForestClassifier()
 rf_parameters = {
-	"n_estimators:": val_range,
-	"max_depth": val_range,
-	"min_samples_split" : val_range,
-	"min_samples_leaf" : val_range
+    	"max_depth": [1, 5, 15, 25, 50, 75, 100, 1000],
+	"min_samples_split" : [2, 3, 4, 5, 6, 7, 8],
+	"min_samples_leaf" : [1, 2, 3, 4, 5, 6, 7, 8]
 }
 
-cv = GridSearchCV(rf, parameters, n_jobs = -1)
+cv = GridSearchCV(rf, rf_parameters, n_jobs = -1, cv = 5)
 cv.fit(X, Y)
-print("Random Forest best parameters are: {results.best_params_}\n\n")
+#print("Random Forest\n")
+display(cv)
+with open("rf_parameters.txt", "a") as rf_file:
+    rf_file.write(f'{cv.best_params_}\n')
 
-
-
-
-knn = KNeighbborsClassifier()
+print("CV Start")
+knn = KNeighborsClassifier()
 knn_parameters = {
-	"n_neighbors": list(range(100)),
-	"leaf_size": list(range(100)),
+	"n_neighbors": [2, 5, 10, 25, 50, 100, 250, 500, 1000],
+	"leaf_size": [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
 	"p": [1, 2]
-}
+}   
 
-cv = GridSearchCV(knn, parameters, n_jobs = -1)
+cv = GridSearchCV(knn, knn_parameters, n_jobs = -1)
 cv.fit(X, Y)
-print("KNN best parameters are: {results.best_params_}")
+#print("KNN\n")
+display(cv)
+with open("knn_parameters.txt", "a") as knn_file:
+    knn_file.write(f'{cv.best_params_}\n')
 
+end_time = time.time()
 
-
+print("Execution time: ", int((time.time() - start_time) / 60), " minutes, ", (time.time() - start_time) % 60, "seconds")

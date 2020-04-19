@@ -14,11 +14,13 @@ from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
 import json
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import GridSearchCV
 import json
 from os import listdir
 from os.path import isfile, join
 import os
-
+import sys
 
 X = []
 Y = []
@@ -32,21 +34,47 @@ for i in range(0, len(onlyfiles)):
     with open(onlyfiles[i]) as data_file:
         for line in data_file:
             line = line.strip("\n")
-            x = []
+            x_pt = []
             data_pts = line.split(",")
             result = data_pts[- 1]
             del data_pts[-1]
-            for i in range(0, len(data_pts)):
-                x.append(float(data_pts[i]))
+            for k in range(0, len(data_pts)):
+                x_pt.append(float(data_pts[k]))
 
-            X.append(x)
+            
+            X.append(x_pt)
             Y.append(result)
             
 
 print(X)
 print(Y)
+#neigh = KNeighborsClassifier(n_neighbors=3, algorithm="auto")
+#neigh.fit(X, Y)
+
+'''
 rf = RandomForestClassifier()
+parameters = {
+    "n_estimators": [5, 10, 50, 100, 250, 500, 1000],
+    "max_depth": [2, 4, 8, 16, 32, 64, 128]
+        }
+cv = GridSearchCV(rf, parameters, cv=5)
+print("Starting optimization\n")
+cv.fit(X, Y)
+'''
+rf = RandomForestClassifier(max_depth=15, min_samples_leaf=1, min_samples_split = 4, n_estimators = 1000)
+
+'''
+def display(results):
+    print(f"Best parameters are: {results.best_params_}")
+    print("\n")
+
+print("Optimization done\n")
+display(cv)
+sys.exit(1)
+'''
 rf.fit(X, Y)
+
+
 
 class CallbackContainer(object):
 
@@ -116,13 +144,14 @@ sensorDataTopic = "$aws/things/processed_data/shadow/update"
 controlTopic = "$aws/things/sensor_glove/shadow/update"
 
 # Configure logging
+'''
 logger = logging.getLogger("AWSIoTPythonSDK.core")
 logger.setLevel(logging.DEBUG)
 streamHandler = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 streamHandler.setFormatter(formatter)
 logger.addHandler(streamHandler)
-
+'''
 # Init AWSIoTMQTTClient
 myAWSIoTMQTTClient = AWSIoTMQTTClient(clientId)
 myAWSIoTMQTTClient.configureEndpoint(host, port)
@@ -163,6 +192,7 @@ while True:
     print(data_pt)
     X_received.append(data_pt)
     res = rf.predict(X_received)
+    #res = neigh.predict(X_received)
     
     send_result = res[0]
     print(send_result)
