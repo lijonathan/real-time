@@ -13,6 +13,7 @@
         "@angular/router": "8.2.14",
         "angular-in-memory-web-api": "0.8.0",
         "core-js": "2.6.11",
+        "express": "^4.17.1",
         "jasmine-core": "2.99.1",
         "jasmine-marbles": "0.6.0",
         "jquery": "^3.4.1",
@@ -25,12 +26,12 @@
         "zone.js": "0.9.1"
     },
     "scripts": {
-        "ng": "ng",
-        "test": "ng test && jasmine",
-        "start": "ng serve",
-        "build": "ng build",
-        "lint": "ng lint",
-        "e2e": "ng e2e"
+        "ng": "../../node_modules/.bin/ng",
+        "test": "../../node_modules/.bin/ng test && jasmine",
+        "start": "../../node_modules/.bin/ng serve",
+        "build": "../../node_modules/.bin/ng build",
+        "lint": "../../node_modules/.bin/ng lint",
+        "e2e": "../../node_modules/.bin/ng e2e"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^0.13.0",
