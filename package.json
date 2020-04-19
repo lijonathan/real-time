@@ -17,8 +17,10 @@
         "jasmine-marbles": "0.6.0",
         "jquery": "^3.4.1",
         "python-shell": "^1.0.8",
+        "requirejs": "^2.3.6",
         "rxjs": "6.5.4",
         "tslib": "1.10.0",
+        "uniq": "^1.0.1",
         "web-animations-js": "2.3.2",
         "zone.js": "0.9.1"
     },
