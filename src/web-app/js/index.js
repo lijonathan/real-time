@@ -1,22 +1,19 @@
+'use strict'
 
-function readTextFile() {
-    let i = 0;
-    while(i < 1000) {
-        const rawFile = new XMLHttpRequest();
-        rawFile.open("GET", 'hand_data.txt', true);
-        rawFile.onreadystatechange = function () {
-            if (rawFile.readyState === 4) {
-                if (rawFile.status === 200 || rawFile.status == 0) {
-                    const allText = rawFile.responseText;
-                    const textAreaTag = document.getElementById("output");
-                    textAreaTag.innerHTML = allText
-                }
-            }
-        };
-        rawFile.send(null);
-        ++i;
-    }
-}
+function clearWindow() {
+    const textAreaTag = document.getElementById("output");
+    textAreaTag.innerText = "";
+    const numGenHeader = document.getElementById("letter-generator");
+    numGenHeader.innerText = "Sign The Letter:";
+    const messageDiv = document.getElementById("response-text");
+    messageDiv.className = "alert alert-warning display-margin";
+    messageDiv.innerText = "Waiting For Response";
+    const fs = require('fs');
+    fs.writeFile('/hand_data.txt', '', function () {
+        console.log('done')
+    })
+};
+
 
 function findA() {
     const numGenHeader = document.getElementById("letter-generator");
@@ -85,40 +82,3 @@ function switcher(value) {
 
 }
 
-function clearWindow() {
-    const textAreaTag = document.getElementById("output");
-    textAreaTag.innerText = "";
-    const numGenHeader = document.getElementById("letter-generator");
-    numGenHeader.innerText = "Sign The Letter:";
-    const messageDiv = document.getElementById("response-text");
-    messageDiv.className = "alert alert-warning display-margin";
-    messageDiv.innerText = "Waiting For Response";
-    const fs = require('fs')
-    fs.truncate('hand_data.txt', 0, function(){console.log('done')})
-}
-
-function sendOnCommand() {
-    const jqXHR = $.ajax({
-        type: "POST",
-        url: "../../glove/glove_start.py",
-        async: false,
-    });
-    const textAreaTag = document.getElementById("output");
-    textAreaTag.innerHTML = jqXHR.responseText
-
-}
-
-function sendOffCommand() {
-    const jqXHR = $.ajax({
-        type: "POST",
-        url: "../../glove/glove_stop.py",
-        async: false,
-    });
-    const textAreaTag = document.getElementById("output");
-    textAreaTag.innerHTML = jqXHR.responseText
-
-}
-
-function callbackFunc(response) {
-    console.log(response);
-}
