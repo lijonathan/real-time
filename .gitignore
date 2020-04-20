@@ -5,5 +5,3 @@ venv
 # glove stuff
 glove/certs/2db4660fce-private.pem.key
 src/web-app/a665f25b84-private.pem.key
-# angular
-/node_modules
