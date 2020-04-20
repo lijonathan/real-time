@@ -37,6 +37,10 @@
   margin: auto;
 }
 
+.direction-sentence {
+    margin-left: 1.2rem;
+    font-weight: bold;
+}
 #letter-generator {
     font-size: x-large;
     font-weight: bold;

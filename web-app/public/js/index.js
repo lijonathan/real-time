@@ -1,12 +1,18 @@
-
 function findLetter(temp) {
+    console.log("Start")
+    let i = 0;
     const numGenHeader = document.getElementById("letter-generator");
     numGenHeader.innerText = temp;
     const str = document.getElementById("output").innerText;
     const lowerTemp = temp.toLowerCase();
     const re = new RegExp(lowerTemp, 'g');
-    const tempValue = str.search(re);  //to match letter to what I have
-    switcher(tempValue);
+    while (i < 600000) {
+        // displayOutput();
+        const tempValue = str.search(re);  //to match letter to what I have
+        switcher(tempValue);
+        i++;
+    }
+    console.log("Stop")
 }
 
 function switcher(value) {
@@ -22,3 +28,22 @@ function switcher(value) {
 
 }
 
+function clearWindow() {
+    const textAreaTag = document.getElementById("output");
+    textAreaTag.innerText = "";
+    const letterTag = document.getElementById("letter-generator");
+    letterTag.innerText = "";
+    const messageDiv = document.getElementById("response-text");
+    messageDiv.className = "alert alert-warning display-margin";
+    messageDiv.innerText = "Waiting For Response";
+    clearFile();
+};
+
+
+function clearFile() {
+    const fs = require('fs');
+    fs.writeFile('../hand_data.txt', 'This is my text', function (err) {
+        if (err) throw err;
+        console.log('Replaced!');
+    });
+};

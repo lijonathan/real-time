@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Sign Language Game</title>
+    <title>Real-Time Sign Language Game</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="js/require.min.js"></script>
-    <script src="js/refresh.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/index.js?version=<?= time() ?"></script>
-    <script src="js/window.js?version=<?= time() ?"></script>
+    <script src="js/window.js"></script>
+    <script src="js/index.js"></script>
+
 </head>
 <body>
 <div class="container background-app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light gameHeaderWindow">
-        <a class="navbar-brand" href="#">Sign Language Game</a>
+        <a class="navbar-brand" href="#">Real-Time Sign Language Game</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
             <button class="btn btn-primary button-position" onclick="clearWindow()" type="button"
                     style="margin-left: 1rem">
@@ -34,38 +34,27 @@
     <br/>
     <form>
         <div id="" class="">
-            <button class="btn btn-warning" onclick="findLetter('A')" type="button"
-                    style="margin-left: 1rem">
-                Sign A
+            <h6 class="direction-sentence">Sign a letter and click a button to verify your answer</h6>
+            <br/>
+            <button class="btn btn-warning" onclick="findLetter('A')" type="button" style="margin-left: 1rem"> A
             </button>
-            <button class="btn btn-warning" onclick="findLetter('B')" type="button"
-                    style="margin-left: 1rem">
-                Sign B
+            <button class="btn btn-warning" onclick="findLetter('B')" type="button" style="margin-left: 1rem"> B
             </button>
-            <button class="btn btn-warning" onclick="findLetter('C')" type="button"
-                    style="margin-left: 1rem">
-                Sign C
+            <button class="btn btn-warning" onclick="findLetter('C')" type="button" style="margin-left: 1rem"> C
             </button>
-            <button class="btn btn-warning" onclick="findLetter('D')" type="button"
-                    style="margin-left: 1rem">
-                Sign D
+            <button class="btn btn-warning" onclick="findLetter('D')" type="button" style="margin-left: 1rem"> D
             </button>
-            <button class="btn btn-warning" onclick="findLetter('E')" type="button"
-                    style="margin-left: 1rem">
-                Sign E
+            <button class="btn btn-warning" onclick="findLetter('E')" type="button" style="margin-left: 1rem"> E
             </button>
-            <button class="btn btn-warning" onclick="findLetter('F')" type="button"
-                    style="margin-left: 1rem">
-                Sign F
+            <button class="btn btn-warning" onclick="findLetter('F')" type="button" style="margin-left: 1rem"> F
             </button>
-            <button class="btn btn-warning" onclick="findLetter('G')" type="button"
-                    style="margin-left: 1rem">
-                Sign G
+            <button class="btn btn-warning" onclick="findLetter('G')" type="button" style="margin-left: 1rem"> G
             </button>
         </div>
     </form>
     <br/>
-    <div class="alert alert-primary display-margin" role="alert">Sign The Letter:&nbsp;&nbsp;&nbsp;<span id="letter-generator"></span></div>
+    <div class="alert alert-primary display-margin" role="alert">Sign The Letter:&nbsp;&nbsp;&nbsp;<span
+            id="letter-generator"></span></div>
     <div class="alert alert-warning display-margin" role="alert" id="response-text">Waiting For Response</div>
     <form>
         <div id="output" class="terminal-response">
