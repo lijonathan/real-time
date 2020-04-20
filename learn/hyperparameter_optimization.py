@@ -8,10 +8,10 @@ from sklearn.model_selection import GridSearchCV
 
 start_time = time.time()
 
-onlyfiles = [f for f in listdir("../glove/training_data") if isfile(join("../glove/training_data", f))]
+onlyfiles = [f for f in listdir("./training_data") if isfile(join("./training_data", f))]
 
 for i in range(0, len(onlyfiles)):
-    onlyfiles[i] = os.path.join("../glove/training_data", onlyfiles[i])
+    onlyfiles[i] = os.path.join("./training_data", onlyfiles[i])
 
 
 X = []
@@ -45,7 +45,7 @@ rf_parameters = {
 
 cv = GridSearchCV(rf, rf_parameters, n_jobs = -1, cv = 5)
 cv.fit(X, Y)
-#print("Random Forest\n")
+
 display(cv)
 with open("rf_parameters.txt", "a") as rf_file:
     rf_file.write(f'{cv.best_params_}\n')
@@ -60,7 +60,7 @@ knn_parameters = {
 
 cv = GridSearchCV(knn, knn_parameters, n_jobs = -1)
 cv.fit(X, Y)
-#print("KNN\n")
+
 display(cv)
 with open("knn_parameters.txt", "a") as knn_file:
     knn_file.write(f'{cv.best_params_}\n')

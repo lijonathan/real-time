@@ -24,10 +24,10 @@ import sys
 X = []
 Y = []
 
-onlyfiles = [f for f in listdir("../glove/training_data") if isfile(join("../glove/training_data", f))]
+onlyfiles = [f for f in listdir("./training_data") if isfile(join("./training_data", f))]
 
 for i in range(0, len(onlyfiles)):
-    onlyfiles[i] = os.path.join("../glove/training_data", onlyfiles[i])
+    onlyfiles[i] = os.path.join("./training_data", onlyfiles[i])
 
 for i in range(0, len(onlyfiles)):
     with open(onlyfiles[i]) as data_file:
