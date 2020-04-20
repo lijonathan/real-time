@@ -1,19 +1,35 @@
+
 function findLetter(temp) {
-    console.log("Start")
+    console.log("Start");
     let i = 0;
     const numGenHeader = document.getElementById("letter-generator");
     numGenHeader.innerText = temp;
     const str = document.getElementById("output").innerText;
     const lowerTemp = temp.toLowerCase();
     const re = new RegExp(lowerTemp, 'g');
-    while (i < 600000) {
-        // displayOutput();
+    while (i < 300000) {
         const tempValue = str.search(re);  //to match letter to what I have
         switcher(tempValue);
         i++;
     }
     console.log("Stop")
 }
+//  Try to set window internal on this too
+// function findLetter(temp) {
+//     console.log("Start");
+//     let i = 0;
+//     const numGenHeader = document.getElementById("letter-generator");
+//     numGenHeader.innerText = temp;
+//     const str = document.getElementById("output").innerText;
+//     const lowerTemp = temp.toLowerCase();
+//     const re = new RegExp(lowerTemp, 'g');
+//     while (i < 300000) {
+//         const tempValue = str.search(re);  //to match letter to what I have
+//         switcher(tempValue);
+//         i++;
+//     }
+//     console.log("Stop")
+// }
 
 function switcher(value) {
     if (value === -1) {
@@ -47,3 +63,18 @@ function clearFile() {
         console.log('Replaced!');
     });
 };
+
+// function displayOutput() {
+//     const rawFile = new XMLHttpRequest();
+//     rawFile.open("GET", 'hand_data.txt', true);
+//     rawFile.onreadystatechange = function () {
+//         if (rawFile.readyState === 4) {
+//             if (rawFile.status === 200 || rawFile.status == 0) {
+//                 const allText = rawFile.responseText;
+//                 const textAreaTag = document.getElementById("output");
+//                 textAreaTag.innerHTML = allText
+//             }
+//         }
+//     };
+//     rawFile.send(null);
+// };
