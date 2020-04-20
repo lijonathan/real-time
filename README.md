@@ -15,7 +15,7 @@ CSE 520 - Real Time Systems
   
 ## Current UI Issues:
   - Require function still not working
-  - Set timer on sign buttons
+  - Timing issues with javascript setInterval()
 
 ## References to UI Issues:
   - https://requirejs.org/docs/api.html#jsfiles
