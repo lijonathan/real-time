@@ -5,6 +5,10 @@
 * Jeremy Manin
 '''
 
+#######################
+# Import ###Libraries #
+#######################
+
 # Import utility libs
 import time
 import os
@@ -24,22 +28,49 @@ from adafruit_mcp3xxx.analog_in import AnalogIn
 # Import BNO055 lib
 from Adafruit_BNO055 import BNO055
 
+############################
+# Helper Functions/Classes #
+############################
+
 # Custom MQTT message callback
 class CallbackContainer(object):
 
+    # Constructor
     def __init__(self, client):
         self._client = client
         self._state = False
 
-    def customCallback(self, client, userdata, message):
-        topicContents = json.loads(message.payload.decode('utf-8'))
-        if(topicContents['state']['reported']['command'] == 'start'):
+    # Glove control topic callback function
+    def glove_control_callback(self, client, userdata, message):
+        topic_contents = json.loads(message.payload.decode('utf-8'))
+        if(topic_contents['state']['reported']['command'] == 'start'):
             self._state = True
-        elif(topicContents['state']['reported']['command'] == 'stop'):
+        elif(topic_contents['state']['reported']['command'] == 'stop'):
             self._state = False
 
-    def getState(self):
+    # Accessor function
+    def get_state(self):
         return self._state
+
+# Function to convert received analog voltage to percentage flex
+def map_flex_to_percent(x, in_min, in_max):
+    out_min = 0
+    out_max = 100
+
+    mapped_val = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+
+    # Bounding
+    if (mapped_val < out_min):
+        mapped_val = out_min
+    elif (mapped_val > out_max):
+        mapped_val = out_max
+
+    # Flip percent (was 100=no flex, now 100=max flex)
+    return (mapped_val-100) * -1
+
+####################
+# Initialize Glove #
+####################
 
 # Create Status LED
 led = LED(12)
@@ -52,20 +83,20 @@ cs = digitalio.DigitalInOut(board.D5)
 ## Create the mcp object
 mcp = MCP.MCP3008(spi, cs)
 ## Create an analog input channels
-chan0 = AnalogIn(mcp, MCP.P0)
-chan1 = AnalogIn(mcp, MCP.P1)
-chan2 = AnalogIn(mcp, MCP.P2)
-chan3 = AnalogIn(mcp, MCP.P3)
-chan4 = AnalogIn(mcp, MCP.P4)
+chan_0 = AnalogIn(mcp, MCP.P0)
+chan_1 = AnalogIn(mcp, MCP.P1)
+chan_2 = AnalogIn(mcp, MCP.P2)
+chan_3 = AnalogIn(mcp, MCP.P3)
+chan_4 = AnalogIn(mcp, MCP.P4)
 
 # Setup BNO055
 ## Create BNO055 device
 bno = BNO055.BNO055(serial_port='/dev/serial0', rst=13)
 ## Init connection to BNO055
-bnoStarted = False
-while not bnoStarted:
+bno_started = False
+while not bno_started:
     try:
-        bnoStarted = bno.begin()
+        bno_started = bno.begin()
     except RuntimeError:
         print('Error starting BNO! Retrying...')
         led.blink(0.1, 0.1, 5)
@@ -77,73 +108,64 @@ bno.set_calibration(cal_data.read())
 # Setup AWS IoT
 ## Configure AWS IoT connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
-scriptPath = os.path.dirname(os.path.realpath(__file__))
-rootCAPath = os.path.join(scriptPath, "certs/root-CA.crt")
-certificatePath = os.path.join(scriptPath, "certs/2db4660fce-certificate.pem.crt")
-privateKeyPath = os.path.join(scriptPath, "certs/2db4660fce-private.pem.key")
+script_path = os.path.dirname(os.path.realpath(__file__))
+root_CA_path = os.path.join(script_path, "../certs/root-CA.crt")
+certificate_path = os.path.join(script_path, "../certs/2db4660fce-certificate.pem.crt")
+private_key_path = os.path.join(script_path, "../certs/2db4660fce-private.pem.key")
 port = 8883
-clientId = "glove"
-sensorDataTopic = "$aws/things/sensor_glove/shadow/update"
-controlTopic = "$aws/things/glove_control/shadow/update"
+client_id = "glove"
+sensor_data_topic = "$aws/things/sensor_glove/shadow/update"
+control_topic = "$aws/things/glove_control/shadow/update"
 
 ## Configure AWS IoT logging
 logger = logging.getLogger("AWSIoTPythonSDK.core")
 logger.setLevel(logging.ERROR)
-streamHandler = logging.StreamHandler()
+stream_handler = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-streamHandler.setFormatter(formatter)
-logger.addHandler(streamHandler)
+stream_handler.setFormatter(formatter)
+logger.addHandler(stream_handler)
 
 ## Init AWSIoTMQTTClient
-myAWSIoTMQTTClient = AWSIoTMQTTClient(clientId)
-myAWSIoTMQTTClient.configureEndpoint(host, port)
-myAWSIoTMQTTClient.configureCredentials(rootCAPath, privateKeyPath, certificatePath)
+my_iot_client = AWSIoTMQTTClient(client_id)
+my_iot_client.configureEndpoint(host, port)
+my_iot_client.configureCredentials(root_CA_path, private_key_path, certificate_path)
 
 ## Configure AWSIoTMQTTClient connection settings
-myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
-myAWSIoTMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
-myAWSIoTMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
-myAWSIoTMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
-myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
+my_iot_client.configureAutoReconnectBackoffTime(1, 32, 20)
+my_iot_client.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
+my_iot_client.configureDrainingFrequency(2)  # Draining: 2 Hz
+my_iot_client.configureConnectDisconnectTimeout(10)  # 10 sec
+my_iot_client.configureMQTTOperationTimeout(5)  # 5 sec
 
 ## Connect to AWS IoT
-myAWSIoTMQTTClient.connect()
+my_iot_client.connect()
 
 ## Subscribe to control topic
-myCallbackContainer = CallbackContainer(myAWSIoTMQTTClient)
-myAWSIoTMQTTClient.subscribe(controlTopic, 1, myCallbackContainer.customCallback)
+my_callback_container = CallbackContainer(my_iot_client)
+my_iot_client.subscribe(control_topic, 1, my_callback_container.glove_control_callback)
 
 time.sleep(2)
 led.on()
 print('System initialization complete.')
 
-# Function to convert received analog voltage to percentage flex
-def mapFlexToPercent(x, in_min, in_max):
-    out_min = 0
-    out_max = 100
+########################
+# Main Processing Loop #
+########################
 
-    mappedVal = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-
-    # Bounding
-    if (mappedVal < out_min):
-        mappedVal = out_min
-    elif (mappedVal > out_max):
-        mappedVal = out_max
-
-    # Flip percent (was 100=no flex, now 100=max flex)
-    return (mappedVal-100) * -1
-
-# Publish to sensor data topic when control topic is received saying start until control topic says stop
 while True:
-    if(myCallbackContainer.getState()):
+    # Publish glove data topic when control topic says start until control topic says stop
+    if(my_callback_container.get_state()):
+        # Get glove orientation
         imu_orient = bno.read_euler()
 
-        flex_index = mapFlexToPercent(chan0.voltage, 1.87, 2.57)
-        flex_mid = mapFlexToPercent(chan1.voltage, 2.02, 2.65)
-        flex_ring = mapFlexToPercent(chan2.voltage, 2.18, 2.76)
-        flex_pinky = mapFlexToPercent(chan3.voltage, 1.71, 2.54)
-        flex_thumb = mapFlexToPercent(chan4.voltage, 1.35, 2.07)
+        # Get finger flexion
+        flex_index = map_flex_to_percent(chan_0.voltage, 1.87, 2.57)
+        flex_mid = map_flex_to_percent(chan_1.voltage, 2.02, 2.65)
+        flex_ring = map_flex_to_percent(chan_2.voltage, 2.18, 2.76)
+        flex_pinky = map_flex_to_percent(chan_3.voltage, 1.71, 2.54)
+        flex_thumb = map_flex_to_percent(chan_4.voltage, 1.35, 2.07)
 
+        # Build data topic
         message = {}
         message['state'] = {}
         message['state']['reported'] = {}
@@ -155,8 +177,9 @@ while True:
         message['state']['reported']['imu_x'] = imu_orient[0]
         message['state']['reported']['imu_y'] = imu_orient[1]
         message['state']['reported']['imu_z'] = imu_orient[2]
-        messageJson = json.dumps(message)
+        message_json = json.dumps(message)
 
-        myAWSIoTMQTTClient.publish(sensorDataTopic, messageJson, 1)
+        # Publish data topic
+        my_iot_client.publish(sensor_data_topic, message_json, 1)
 
     time.sleep(1)
