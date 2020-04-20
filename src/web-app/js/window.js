@@ -1,24 +1,17 @@
-
-
-function readTextFile() {
-    console.log("Run it again")
-    let i = 0;
-    while (i < 1000) {
-        const rawFile = new XMLHttpRequest();
-        rawFile.open("GET", 'hand_data.txt', true);
-        rawFile.onreadystatechange = function () {
-            if (rawFile.readyState === 4) {
-                if (rawFile.status === 200 || rawFile.status == 0) {
-                    const allText = rawFile.responseText;
-                    const textAreaTag = document.getElementById("output");
-                    textAreaTag.innerHTML = allText
-                }
+window.setInterval(function () {
+    const rawFile = new XMLHttpRequest();
+    rawFile.open("GET", 'hand_data.txt', true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                const allText = rawFile.responseText;
+                const textAreaTag = document.getElementById("output");
+                textAreaTag.innerHTML = allText
             }
-        };
-        rawFile.send(null);
-        ++i;
-    }
-}
+        }
+    };
+    rawFile.send(null);
+}, 1000);
 
 function sendOnCommand() {
     const jqXHR = $.ajax({
