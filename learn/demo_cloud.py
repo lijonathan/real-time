@@ -128,7 +128,7 @@ logger.setLevel(logging.ERROR)
 stream_handler = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 stream_handler.setFormatter(formatter)
-logger.addHandler(streamHandler)
+logger.addHandler(stream_handler)
 
 ## Init AWSIoTMQTTClient
 my_iot_client.configureAutoReconnectBackoffTime(1, 32, 20)
