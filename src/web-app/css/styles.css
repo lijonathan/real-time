@@ -36,3 +36,8 @@
   width: 65rem;
   margin: auto;
 }
+
+#letter-generator {
+    font-size: x-large;
+    font-weight: bold;
+}

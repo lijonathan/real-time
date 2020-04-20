@@ -7,21 +7,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="js/require.min.js"></script>
+    <script src="js/refresh.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/index.js"></script>
-    <script src="js/window.js"></script>
+    <script src="js/index.js?version=<?= time() ?"></script>
+    <script src="js/window.js?version=<?= time() ?"></script>
 </head>
 <body>
 <div class="container background-app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light gameHeaderWindow">
         <a class="navbar-brand" href="#">Sign Language Game</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-            <button class="btn btn-primary button-position" onclick="readTextFile()" type="button">
-                Display Output
-            </button>
-            <button class="btn btn-secondary button-position" onclick="clearWindow()" type="button"
+            <button class="btn btn-primary button-position" onclick="clearWindow()" type="button"
                     style="margin-left: 1rem">
-                Clear Window
+                Reset
             </button>
             <button class="btn btn-success button-position" onclick="sendOnCommand()" type="button"
                     style="margin-left: 1rem">
@@ -60,10 +58,14 @@
                     style="margin-left: 1rem">
                 Sign F
             </button>
+            <button class="btn btn-warning" onclick="findG()" type="button"
+                    style="margin-left: 1rem">
+                Sign G
+            </button>
         </div>
     </form>
     <br/>
-    <div class="alert alert-primary display-margin" role="alert" id="letter-generator">Sign The Letter:</div>
+    <div class="alert alert-primary display-margin" role="alert">Sign The Letter:&nbsp;&nbsp;&nbsp;<span id="letter-generator"></span></div>
     <div class="alert alert-warning display-margin" role="alert" id="response-text">Waiting For Response</div>
     <form>
         <div id="output" class="terminal-response">
