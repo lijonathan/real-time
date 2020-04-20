@@ -143,15 +143,6 @@ clientId = "cloud_Ec2"
 sensorDataTopic = "$aws/things/processed_data/shadow/update"
 controlTopic = "$aws/things/sensor_glove/shadow/update"
 
-# Configure logging
-'''
-logger = logging.getLogger("AWSIoTPythonSDK.core")
-logger.setLevel(logging.DEBUG)
-streamHandler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-streamHandler.setFormatter(formatter)
-logger.addHandler(streamHandler)
-'''
 # Init AWSIoTMQTTClient
 myAWSIoTMQTTClient = AWSIoTMQTTClient(clientId)
 myAWSIoTMQTTClient.configureEndpoint(host, port)
@@ -190,12 +181,21 @@ while True:
     data_pt.append(myCallbackContainer.get_flex_thumb())
 
     print(data_pt)
+    sum_vals = 0
+    for val in data_pt:
+        sum_vals += sum_vals + val
+
+    send = True
+    if sum_vals == 0:
+        send = False
+
+
     X_received.append(data_pt)
     res = rf.predict(X_received)
     #res = neigh.predict(X_received)
     
     send_result = res[0]
-    print(send_result)
-    myAWSIoTMQTTClient.publish(sensorDataTopic, send_result, 1)
-
+    if send:
+        myAWSIoTMQTTClient.publish(sensorDataTopic, send_result, 1)
+        print(send_result)
     time.sleep(1)
