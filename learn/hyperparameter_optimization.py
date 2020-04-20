@@ -1,14 +1,12 @@
 import time
 import os
-from os.path import isfile, join
-from os import listdir
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 
 start_time = time.time()
 
-onlyfiles = [f for f in listdir("./training_data") if isfile(join("./training_data", f))]
+onlyfiles = [f for f in os.listdir("./training_data") if os.isfile(os.join("./training_data", f))]
 
 for i in range(0, len(onlyfiles)):
     onlyfiles[i] = os.path.join("./training_data", onlyfiles[i])
