@@ -12,7 +12,6 @@ import time
 # Import AWS IoT Core libs
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
-import json
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
@@ -48,30 +47,10 @@ for i in range(0, len(onlyfiles)):
 
 print(X)
 print(Y)
-#neigh = KNeighborsClassifier(n_neighbors=3, algorithm="auto")
-#neigh.fit(X, Y)
 
-'''
-rf = RandomForestClassifier()
-parameters = {
-    "n_estimators": [5, 10, 50, 100, 250, 500, 1000],
-    "max_depth": [2, 4, 8, 16, 32, 64, 128]
-        }
-cv = GridSearchCV(rf, parameters, cv=5)
-print("Starting optimization\n")
-cv.fit(X, Y)
-'''
+
 rf = RandomForestClassifier(max_depth=15, min_samples_leaf=1, min_samples_split = 4, n_estimators = 1000)
 
-'''
-def display(results):
-    print(f"Best parameters are: {results.best_params_}")
-    print("\n")
-
-print("Optimization done\n")
-display(cv)
-sys.exit(1)
-'''
 rf.fit(X, Y)
 
 
@@ -192,7 +171,6 @@ while True:
 
     X_received.append(data_pt)
     res = rf.predict(X_received)
-    #res = neigh.predict(X_received)
     
     send_result = res[0]
     if send:
