@@ -4,4 +4,6 @@ venv
 .idea
 # glove stuff
 certs/2db4660fce-private.pem.key
-src/web-app/a665f25b84-private.pem.key
+web-app/public/a665f25b84-private.pem.key
+#lib
+web-app/node_modules

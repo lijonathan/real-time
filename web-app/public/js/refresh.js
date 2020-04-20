@@ -7,8 +7,9 @@ function clearWindow() {
     clearFile();
 };
 
+const fs = require('fs');
+
 function clearFile() {
-    const fs = require('fs');
     fs.writeFile('../hand_data.txt', 'This is my text', function (err) {
         if (err) throw err;
         console.log('Replaced!');
