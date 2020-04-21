@@ -182,4 +182,5 @@ while True:
         # Publish data topic
         my_iot_client.publish(sensor_data_topic, message_json, 1)
 
-    time.sleep(1)
+    # Loop at 10Hz
+    time.sleep(0.1)
