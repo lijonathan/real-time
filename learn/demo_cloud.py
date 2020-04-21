@@ -191,9 +191,9 @@ while True:
         counts = {}
         for pred in predictions:
             if pred in counts.keys():
-                count[pred] = count[pred] + 1
+                counts[pred] = counts[pred] + 1
             else:
-                count[pred] = 1
+                counts[pred] = 1
 
         max_count = 0
         mode = None
