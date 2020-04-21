@@ -155,6 +155,8 @@ time.sleep(2)
 ########################
 
 while True:
+
+    print(my_callback_container.get_control_state())
     # Get sensor data for prediction once control topic is received
     if (my_callback_container.get_control_state()):
         # Reset control state as request is being processed
@@ -188,17 +190,17 @@ while True:
         # Grabbing majority prediction
         counts = {}
         for pred in predictions:
-        	if pred in counts.keys():
-        		count[pred] = count[pred] + 1
-        	else:
-        		count[pred] = 1
+            if pred in counts.keys():
+                count[pred] = count[pred] + 1
+            else:
+                count[pred] = 1
 
         max_count = 0
         mode = None
         for key in count.keys():
-        	if counts[key] > max_count:
-        		max_count = counts[key]
-        		mode = key
+            if counts[key] > max_count:
+                max_count = counts[key]
+                mode = key
 
         send_result = mode
 
