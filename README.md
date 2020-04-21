@@ -4,15 +4,25 @@ CSE 520 - Real Time Systems
   - Justin Marshall
   - Jeremy Manin
   - Jonathan Li
+
+## Prerequistes for UI
+  - Node,js
+  - Other dependences run the following
+     ```
+     $ npm install jquery semantic-ui-css handlebars vanilla-router express dotenv axios
+     ```
+   
+## Starting App
+  - Navigate to the following path
+   ```
+   ~/real-time/web-app
+   $ node server.js
+   ```
+  - App will run on http://localhost:8080/
   
 ## Current UI Issues:
-  - Need to be able to run node command from cmd line to localhost the app
-    - From terminal: node app.js
-    - Need to look how to stage app rather then text
-  - Once items are running on the node then require.js will be able to be used
-  - Require.js allows us to manipulate files with js
-  - Set timer on Sign Buttons
+  - Require function still not working
+  - Timing issues with javascript setInterval()
 
 ## References to UI Issues:
   - https://requirejs.org/docs/api.html#jsfiles
-  - https://www.w3schools.com/nodejs/default.asp

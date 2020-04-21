@@ -11,7 +11,7 @@ window.setInterval(function () {
         }
     };
     rawFile.send(null);
-}, 1000);
+}, 2000);
 
 function sendOnCommand() {
     const jqXHR = $.ajax({
