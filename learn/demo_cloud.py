@@ -173,7 +173,7 @@ while True:
         my_iot_client.publish(glove_control_topic, message_json, 1)
 
         # Wait for buffer to fill with glove data
-        time.sleep(5)
+        time.sleep(3)
 
         # Publish glove stop command
         message = {}
@@ -196,7 +196,7 @@ while True:
 
         max_count = 0
         mode = None
-        for key in count.keys():
+        for key in counts.keys():
             if counts[key] > max_count:
                 max_count = counts[key]
                 mode = key
