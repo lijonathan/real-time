@@ -2,8 +2,7 @@
 venv
 #intelliJ
 .idea
-# glove stuff
-certs/2db4660fce-private.pem.key
-web-app/public/a665f25b84-private.pem.key
+#aws private keys
+**/*-private.pem.key
 #lib
 web-app/node_modules
