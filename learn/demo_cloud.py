@@ -145,7 +145,6 @@ my_callback_container = CallbackContainer(my_iot_client)
 my_iot_client.subscribe(cloud_control_topic, 1, my_callback_container.control_callback)
 
 ## Subscribe to glove data topic
-my_callback_container = CallbackContainer(my_iot_client)
 my_iot_client.subscribe(glove_data_topic, 1, my_callback_container.glove_data_callback)
 
 time.sleep(2)
