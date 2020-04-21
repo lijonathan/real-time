@@ -1,18 +1,27 @@
+window.setInterval(function () {
+    const rawFile = new XMLHttpRequest();
+    rawFile.open("GET", 'hand_data.txt', true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status == 0) {
+                const allText = rawFile.responseText;
+                const textAreaTag = document.getElementById("output");
+                textAreaTag.innerHTML = allText
+            }
+        }
+    };
+    rawFile.send(null);
+}, 2000);
+
 
 function findLetter(temp) {
-    console.log("Start");
-    let i = 0;
     const numGenHeader = document.getElementById("letter-generator");
     numGenHeader.innerText = temp;
     const str = document.getElementById("output").innerText;
     const lowerTemp = temp.toLowerCase();
     const re = new RegExp(lowerTemp, 'g');
-    while (i < 300000) {
-        const tempValue = str.search(re);  //to match letter to what I have
-        switcher(tempValue);
-        i++;
-    }
-    console.log("Stop")
+    const tempValue = str.search(re);  //to match letter to what I have
+    switcher(tempValue);
 }
 
 function switcher(value) {
@@ -27,3 +36,28 @@ function switcher(value) {
     }
 
 }
+
+// function mainLetterFind(temp) {
+//     const rawFile = new XMLHttpRequest();
+//     let allText = '';
+//     rawFile.open("GET", 'hand_data.txt', true);
+//     rawFile.onreadystatechange = function () {
+//         if (rawFile.readyState === 4) {
+//             if (rawFile.status === 200 || rawFile.status === 0) {
+//                 allText = rawFile.responseText;
+//                 const textAreaTag = document.getElementById("output");
+//                 textAreaTag.innerHTML = allText;
+//                 console.log("allText = " + allText);
+//                 console.log("temp = " + temp);
+//                 if (allText === temp) {
+//                     switcher(0);
+//                     console.log("Matched In Time")
+//                 } else {
+//                     switcher(-1);
+//                     console.log("Did Not Matched In Time")
+//                 }
+//             }
+//         }
+//     };
+//     rawFile.send(null);
+// };

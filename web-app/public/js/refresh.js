@@ -1,13 +1,13 @@
 
 // import {PythonShell} from 'python-shell';
-let {PythonShell} = require('python-shell')
-
-function sendOnCommand() {
-
-    PythonShell.run('../../../glove/glove_start.py', null, function (err) {
-        if (err) throw err;
-        console.log('finished');
-    });
+// let {PythonShell} = require('python-shell')
+//
+// function sendOnCommand() {
+//
+//     PythonShell.run('../../../glove/glove_start.py', null, function (err) {
+//         if (err) throw err;
+//         console.log('finished');
+//     });
 
     // var xhttp = new XMLHttpRequest();
     // xhttp.onreadystatechange = function() {
@@ -36,7 +36,7 @@ function sendOnCommand() {
     // });
 
 
-}
+// }
 
 // window.setInterval(function () {
 //     const rawFile = new XMLHttpRequest();
