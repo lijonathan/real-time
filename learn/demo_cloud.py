@@ -185,8 +185,22 @@ while True:
         # Get random forest classifier's predictions
         predictions = rf.predict(my_callback_container.get_glove_data_buffer())
 
-        #TO DO: GET MODE FROM LIST OF PREDICTIONS
-        send_result = predictions[0]
+        # Grabbing majority prediction
+        counts = {}
+        for pred in predictions:
+        	if pred in counts.keys():
+        		count[pred] = count[pred] + 1
+        	else:
+        		count[pred] = 1
+
+        max_count = 0
+        mode = None
+        for key in count.keys():
+        	if counts[key] > max_count:
+        		max_count = counts[key]
+        		mode = key
+
+        send_result = mode
 
         # Publish result
         my_iot_client.publish(result_topic, send_result, 1)
