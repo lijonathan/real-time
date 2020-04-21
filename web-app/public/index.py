@@ -12,7 +12,7 @@ def customCallback(client, userdata, message):
     #hand_data = open("handData.txt", "w")
     #print("Received a new message: ", hand_data)
     print(message.payload)
-    with open ("hand_data.txt", 'a') as data_file:
+    with open ("hand_data.txt", 'w') as data_file:
         write_line = str(message.payload)
         write_line = write_line.strip("b")
         data_file.write(write_line)

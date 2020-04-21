@@ -1,6 +1,7 @@
 require('dotenv').config();
+const requirejs = require('requirejs');
+
 const express = require('express');
-const fs = require('fs');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -8,6 +9,8 @@ const port = process.env.PORT || 8080;
 
 // Set public folder as root
 app.use(express.static('public'));
+
+app.use('/scripts', express.static(`/node_modules/`));
 
 
 const errorHandler = (err, req, res) => {

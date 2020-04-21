@@ -17,6 +17,8 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
     "jquery": "^3.5.0",
+    "python-shell": "^1.0.8",
+    "requirejs": "^2.3.6",
     "semantic-ui-calendar": "0.0.8",
     "semantic-ui-css": "^2.4.1",
     "vanilla-router": "^1.2.8"
