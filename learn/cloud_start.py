@@ -1,6 +1,6 @@
 '''
 * CSE520 Real-Time Systems
-* Demo 1 Glove Sensor Data Collection Stop Test Command
+* Demo 1 Glove Sensor Data Collection Start Test Command
 * Jeremy Manin
 *
 * Created with help from sample code from AWS
@@ -18,7 +18,7 @@ certificatePath = "../certs/2db4660fce-certificate.pem.crt"
 privateKeyPath = "../certs/2db4660fce-private.pem.key"
 port = 8883
 clientId = "test_controller"
-controlTopic = "$aws/things/glove_control/shadow/update"
+controlTopic = "$aws/things/cloud_control/shadow/update"
 
 # Configure logging
 logger = logging.getLogger("AWSIoTPythonSDK.core")
@@ -44,10 +44,10 @@ myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 myAWSIoTMQTTClient.connect()
 time.sleep(2)
 
-# Build and publish control topic telling glove to stop
+# Build and publish control topic telling cloud to start
 message = {}
 message['state'] = {}
 message['state']['reported'] = {}
-message['state']['reported']['command'] = 'stop'
+message['state']['reported']['command'] = 'start'
 messageJson = json.dumps(message)
 myAWSIoTMQTTClient.publish(controlTopic, messageJson, 1)
