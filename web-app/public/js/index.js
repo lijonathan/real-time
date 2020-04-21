@@ -17,18 +17,27 @@ function findLetter(temp) {
 //  Try to set window internal on this too
 // function findLetter(temp) {
 //     console.log("Start");
-//     let i = 0;
+//     const rawFile = new XMLHttpRequest();
+//     rawFile.open("GET", 'hand_data.txt', true);
+//     rawFile.onreadystatechange = function () {
+//         if (rawFile.readyState === 4) {
+//             if (rawFile.status === 200 || rawFile.status == 0) {
+//                 const allText = rawFile.responseText;
+//                 const textAreaTag = document.getElementById("output");
+//                 textAreaTag.innerHTML = allText
+//             }
+//         }
+//     };
+//     rawFile.send(null);
+//     for(var i=0; i<1000;++i){}
 //     const numGenHeader = document.getElementById("letter-generator");
 //     numGenHeader.innerText = temp;
 //     const str = document.getElementById("output").innerText;
 //     const lowerTemp = temp.toLowerCase();
 //     const re = new RegExp(lowerTemp, 'g');
-//     while (i < 300000) {
 //         const tempValue = str.search(re);  //to match letter to what I have
 //         switcher(tempValue);
-//         i++;
-//     }
-//     console.log("Stop")
+//     console.log("Stop");
 // }
 
 function switcher(value) {
@@ -57,6 +66,7 @@ function clearWindow() {
 
 
 function clearFile() {
+
     const fs = require('fs');
     fs.writeFile('../hand_data.txt', 'This is my text', function (err) {
         if (err) throw err;

@@ -17,7 +17,7 @@ function sendOnCommand() {
     const jqXHR = $.ajax({
         type: "POST",
         url: "../../glove/glove_start.py",
-        async: false,
+        async: true,
     });
     const textAreaTag = document.getElementById("output");
     textAreaTag.innerHTML = jqXHR.responseText
@@ -28,7 +28,7 @@ function sendOffCommand() {
     const jqXHR = $.ajax({
         type: "POST",
         url: "../../glove/glove_stop.py",
-        async: false,
+        async: true,
     });
     const textAreaTag = document.getElementById("output");
     textAreaTag.innerHTML = jqXHR.responseText
