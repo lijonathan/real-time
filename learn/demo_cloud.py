@@ -145,7 +145,6 @@ my_callback_container = CallbackContainer(my_iot_client)
 my_iot_client.subscribe(cloud_control_topic, 1, my_callback_container.control_callback)
 
 ## Subscribe to glove data topic
-my_callback_container = CallbackContainer(my_iot_client)
 my_iot_client.subscribe(glove_data_topic, 1, my_callback_container.glove_data_callback)
 
 time.sleep(2)
@@ -155,6 +154,8 @@ time.sleep(2)
 ########################
 
 while True:
+
+    print(my_callback_container.get_control_state())
     # Get sensor data for prediction once control topic is received
     if (my_callback_container.get_control_state()):
         # Reset control state as request is being processed
@@ -172,7 +173,7 @@ while True:
         my_iot_client.publish(glove_control_topic, message_json, 1)
 
         # Wait for buffer to fill with glove data
-        time.sleep(5)
+        time.sleep(3)
 
         # Publish glove stop command
         message = {}
@@ -185,8 +186,22 @@ while True:
         # Get random forest classifier's predictions
         predictions = rf.predict(my_callback_container.get_glove_data_buffer())
 
-        #TO DO: GET MODE FROM LIST OF PREDICTIONS
-        send_result = predictions[0]
+        # Grabbing majority prediction
+        counts = {}
+        for pred in predictions:
+            if pred in counts.keys():
+                counts[pred] = counts[pred] + 1
+            else:
+                counts[pred] = 1
+
+        max_count = 0
+        mode = None
+        for key in counts.keys():
+            if counts[key] > max_count:
+                max_count = counts[key]
+                mode = key
+
+        send_result = mode
 
         # Publish result
         my_iot_client.publish(result_topic, send_result, 1)
