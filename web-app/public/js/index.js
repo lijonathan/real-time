@@ -21,22 +21,51 @@ function subscribeStart() {
         type: "GET",
         url: "http://127.0.0.1:5000/subscribe-start",
         crossDomain:true,
-        error: function(result) {
-            alert('Error starting subscription service!');
+        success: function() {
+            const waitMessage = document.getElementById("wait-message");
+            waitMessage.style.color = 'green';
+            waitMessage.innerText = "Ready To Play"
+        },
+        error: function() {
+            const waitMessage = document.getElementById("wait-message");
+            waitMessage.style.color = 'red';
+            waitMessage.innerText = "Error Starting Subscription Service"
         }
     });
 }
+
 
 function cloudStart() {
     $.ajax({
         type: "GET",
         url: "http://127.0.0.1:5000/cloud-start",
         crossDomain:true,
-        error: function(result) {
-            alert('Error sending cloud start topic!');
-        }
+        error: function() {
+            const waitMessage = document.getElementById("wait-message");
+            waitMessage.style.color = 'red';
+            waitMessage.innerText = "Error Starting Subscription Service"
+        },
+
     });
 }
+
+// function cloudStart(temp) {
+//     $.ajax({
+//         type: "GET",
+//         url: "http://127.0.0.1:5000/cloud-start",
+//         crossDomain:true,
+//         success: function(data) {
+//             mainLetterFind(temp);
+//         },
+//         error: function(result) {
+//             const waitMessage = document.getElementById("wait-message");
+//             waitMessage.style.color = 'red';
+//             waitMessage.innerText = "Error Starting Subscription Service"
+//         },
+//
+//     });
+// }
+
 
 function findLetter(temp) {
     const numGenHeader = document.getElementById("letter-generator");
