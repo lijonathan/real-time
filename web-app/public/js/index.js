@@ -16,6 +16,27 @@
 //     waitMessage.innerText = "Ready To Play"
 // }, 2000);
 
+function subscribeStart() {
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:5000/subscribe-start",
+        crossDomain:true,
+        error: function(result) {
+            alert('Error starting subscription service!');
+        }
+    });
+}
+
+function cloudStart() {
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:5000/cloud-start",
+        crossDomain:true,
+        error: function(result) {
+            alert('Error sending cloud start topic!');
+        }
+    });
+}
 
 function findLetter(temp) {
     const numGenHeader = document.getElementById("letter-generator");
