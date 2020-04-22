@@ -22,9 +22,7 @@ function subscribeStart() {
         url: "http://127.0.0.1:5000/subscribe-start",
         crossDomain:true,
         success: function() {
-            const waitMessage = document.getElementById("wait-message");
-            waitMessage.style.color = 'green';
-            waitMessage.innerText = "Ready To Play"
+            setTimeout(readyToPlay, 3000);
         },
         error: function() {
             const waitMessage = document.getElementById("wait-message");
@@ -34,30 +32,19 @@ function subscribeStart() {
     });
 }
 
-
-function cloudStart() {
-    $.ajax({
-        type: "GET",
-        url: "http://127.0.0.1:5000/cloud-start",
-        crossDomain:true,
-        error: function() {
-            const waitMessage = document.getElementById("wait-message");
-            waitMessage.style.color = 'red';
-            waitMessage.innerText = "Error Starting Subscription Service"
-        },
-
-    });
+function readyToPlay(){
+    const waitMessage = document.getElementById("wait-message");
+    waitMessage.style.color = 'green';
+    waitMessage.innerText = "Ready To Play";
 }
 
-// function cloudStart(temp) {
+
+// function cloudStart() {
 //     $.ajax({
 //         type: "GET",
 //         url: "http://127.0.0.1:5000/cloud-start",
 //         crossDomain:true,
-//         success: function(data) {
-//             mainLetterFind(temp);
-//         },
-//         error: function(result) {
+//         error: function() {
 //             const waitMessage = document.getElementById("wait-message");
 //             waitMessage.style.color = 'red';
 //             waitMessage.innerText = "Error Starting Subscription Service"
@@ -67,15 +54,35 @@ function cloudStart() {
 // }
 
 
-function findLetter(temp) {
-    const numGenHeader = document.getElementById("letter-generator");
-    numGenHeader.innerText = temp;
-    const str = document.getElementById("output").innerText;
-    const lowerTemp = temp.toLowerCase();
-    const re = new RegExp(lowerTemp, 'g');
-    const tempValue = str.search(re);  //to match letter to what I have
-    switcher(tempValue);
+function cloudStart(temp) {
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:5000/cloud-start",
+        crossDomain:true,
+        success: function(data) {
+            setTimeout(function() {
+                mainLetterFind(temp)
+            }, 5000);
+        },
+        error: function(result) {
+            const waitMessage = document.getElementById("wait-message");
+            waitMessage.style.color = 'red';
+            waitMessage.innerText = "Error Starting Subscription Service"
+        },
+
+    });
 }
+
+
+// function findLetter(temp) {
+//     const numGenHeader = document.getElementById("letter-generator");
+//     numGenHeader.innerText = temp;
+//     const str = document.getElementById("output").innerText;
+//     const lowerTemp = temp.toLowerCase();
+//     const re = new RegExp(lowerTemp, 'g');
+//     const tempValue = str.search(re);  //to match letter to what I have
+//     switcher(tempValue);
+// }
 
 function switcher(value) {
     if (value === -1) {
@@ -100,7 +107,7 @@ function mainLetterFind(temp) {
                 allText = rawFile.responseText;
                 const textAreaTag = document.getElementById("output");
                 textAreaTag.innerHTML = allText;
-                const re = new RegExp(temp, 'g')
+                const re = new RegExp(temp, 'g');
                 temp = allText.search(re);
                 switcher(temp);
             }
