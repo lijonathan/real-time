@@ -16,7 +16,7 @@ CSE 520 - Real Time Systems
   - Navigate to the following path
    ```
    ~/real-time/web-app
-   $ node server.js
+   $ node server.js or npm start
    ```
   - App will run on http://localhost:8080/
   

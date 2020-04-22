@@ -30,6 +30,7 @@
     height: 30rem;
     margin: auto;
     overflow: auto;
+    display: none;
 }
 
 .display-margin {

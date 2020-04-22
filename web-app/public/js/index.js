@@ -1,17 +1,20 @@
-window.setInterval(function () {
-    const rawFile = new XMLHttpRequest();
-    rawFile.open("GET", 'hand_data.txt', true);
-    rawFile.onreadystatechange = function () {
-        if (rawFile.readyState === 4) {
-            if (rawFile.status === 200 || rawFile.status == 0) {
-                const allText = rawFile.responseText;
-                const textAreaTag = document.getElementById("output");
-                textAreaTag.innerHTML = allText
-            }
-        }
-    };
-    rawFile.send(null);
-}, 2000);
+// window.setInterval(function () {
+//     const waitMessage = document.getElementById("wait-message");
+//     waitMessage.innerText = "Receiving, please wait..."
+//     const rawFile = new XMLHttpRequest();
+//     rawFile.open("GET", 'hand_data.txt', true);
+//     rawFile.onreadystatechange = function () {
+//         if (rawFile.readyState === 4) {
+//             if (rawFile.status === 200 || rawFile.status == 0) {
+//                 const allText = rawFile.responseText;
+//                 const textAreaTag = document.getElementById("output");
+//                 textAreaTag.innerHTML = allText
+//             }
+//         }
+//     };
+//     rawFile.send(null);
+//     waitMessage.innerText = "Ready To Play"
+// }, 2000);
 
 
 function findLetter(temp) {
@@ -37,27 +40,21 @@ function switcher(value) {
 
 }
 
-// function mainLetterFind(temp) {
-//     const rawFile = new XMLHttpRequest();
-//     let allText = '';
-//     rawFile.open("GET", 'hand_data.txt', true);
-//     rawFile.onreadystatechange = function () {
-//         if (rawFile.readyState === 4) {
-//             if (rawFile.status === 200 || rawFile.status === 0) {
-//                 allText = rawFile.responseText;
-//                 const textAreaTag = document.getElementById("output");
-//                 textAreaTag.innerHTML = allText;
-//                 console.log("allText = " + allText);
-//                 console.log("temp = " + temp);
-//                 if (allText === temp) {
-//                     switcher(0);
-//                     console.log("Matched In Time")
-//                 } else {
-//                     switcher(-1);
-//                     console.log("Did Not Matched In Time")
-//                 }
-//             }
-//         }
-//     };
-//     rawFile.send(null);
-// };
+function mainLetterFind(temp) {
+    const rawFile = new XMLHttpRequest();
+    let allText = '';
+    rawFile.open("GET", 'hand_data.txt', true);
+    rawFile.onreadystatechange = function () {
+        if (rawFile.readyState === 4) {
+            if (rawFile.status === 200 || rawFile.status === 0) {
+                allText = rawFile.responseText;
+                const textAreaTag = document.getElementById("output");
+                textAreaTag.innerHTML = allText;
+                const re = new RegExp(temp, 'g')
+                temp = allText.search(re);
+                switcher(temp);
+            }
+        }
+    };
+    rawFile.send(null);
+};

@@ -12,14 +12,14 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light gameHeaderWindow">
         <a class="navbar-brand" href="#">Real-Time Sign Language Game</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-            <button class="btn btn-success button-position" onclick="sendOnCommand()" type="button"
+            <button class="btn btn-success button-position" onclick="location.href='http://127.0.0.1:5000/cloud-start'" type="button"
                     style="margin-left: 1rem">
                 Start Glove
             </button>
-            <button class="btn btn-danger button-position" onclick="sendOffCommand()" type="button"
-                    style="margin-left: 1rem">
-                Stop Glove
-            </button>
+<!--            <button class="btn btn-danger button-position" onclick="sendOffCommand()" type="button"-->
+<!--                    style="margin-left: 1rem">-->
+<!--                Stop Glove-->
+<!--            </button>-->
         </div>
     </nav>
     <br/>
@@ -27,19 +27,21 @@
         <div id="" class="">
             <h6 class="direction-sentence">Sign a letter and click a button to verify your answer</h6>
             <br/>
-            <button class="btn btn-warning" onclick="findLetter('a')" type="button" style="margin-left: 1rem"> A
+            <h6 class="direction-sentence" id="wait-message">Receiving, please wait...</h6>
+            <br/>
+            <button class="btn btn-warning" onclick="mainLetterFind('a')" type="button" style="margin-left: 1rem"> A
             </button>
-            <button class="btn btn-warning" onclick="findLetter('b')" type="button" style="margin-left: 1rem"> B
+            <button class="btn btn-warning" onclick="mainLetterFind('b')" type="button" style="margin-left: 1rem"> B
             </button>
-            <button class="btn btn-warning" onclick="findLetter('c')" type="button" style="margin-left: 1rem"> C
+            <button class="btn btn-warning" onclick="mainLetterFind('c')" type="button" style="margin-left: 1rem"> C
             </button>
-            <button class="btn btn-warning" onclick="findLetter('d')" type="button" style="margin-left: 1rem"> D
+            <button class="btn btn-warning" onclick="mainLetterFind('d')" type="button" style="margin-left: 1rem"> D
             </button>
-            <button class="btn btn-warning" onclick="findLetter('e')" type="button" style="margin-left: 1rem"> E
+            <button class="btn btn-warning" onclick="mainLetterFind('e')" type="button" style="margin-left: 1rem"> E
             </button>
-            <button class="btn btn-warning" onclick="findLetter('f')" type="button" style="margin-left: 1rem"> F
+            <button class="btn btn-warning" onclick="mainLetterFind('f')" type="button" style="margin-left: 1rem"> F
             </button>
-            <button class="btn btn-warning" onclick="findLetter('g')" type="button" style="margin-left: 1rem"> G
+            <button class="btn btn-warning" onclick="mainLetterFind('g')" type="button" style="margin-left: 1rem"> G
             </button>
         </div>
     </form>

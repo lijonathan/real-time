@@ -1,7 +1,9 @@
 
 
 
-// require(['python-shell'], function sendOnCommand() {
+// function sendOnCommand() {
+//     // var shell = new ActiveXObject("WScript.Shell");
+//     // shell.run("ls");
 //     const myPythonScriptPath = '../../../glove/glove_start.py';
 //
 // // Use python shell
@@ -22,4 +24,24 @@
 //
 //         console.log('finished');
 //     });
+// };
+
+function sendOnCommand(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            xhttp.open("GET", "../index.php", true);
+            // Typical action to be performed when the document is ready:
+            console.log("complete")
+        }
+    };
+    xhttp.open("GET", "../index.php", true);
+    xhttp.send();
+}
+
+// define(function (require) {
+//     var child_process = require('child_process');
 // });
+//
+// var shell = new ActiveXObject("WScript.Shell");
+// shell.run("ls");
