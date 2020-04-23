@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light gameHeaderWindow">
         <a class="navbar-brand" href="#">Real-Time Sign Language Game</a>
         <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-            <button class="btn btn-danger button-position" onclick="subscribeStart()" type="button"
+            <button id="subscribe-button" class="btn btn-primary button-position" onclick="subscribeStart()" type="button"
                     style="margin-left: 1rem">
                 Start Receiving
             </button>
@@ -23,7 +23,7 @@
         <div id="" class="">
             <h6 class="direction-sentence">Sign a letter and click a button to verify your answer</h6>
             <br/>
-            <h6 class="direction-sentence" id="wait-message">Receiving, please wait...</h6>
+            <h6 class="direction-sentence" id="wait-message"></h6>
             <br/>
             <button class="btn btn-warning" onclick="cloudStart('a')" type="button" style="margin-left: 1rem"> A
             </button>
@@ -42,8 +42,6 @@
         </div>
     </form>
     <br/>
-    <div class="alert alert-primary display-margin" role="alert">Sign The Letter:&nbsp;&nbsp;&nbsp;<span
-            id="letter-generator"></span></div>
     <div class="alert alert-warning display-margin" role="alert" id="response-text">Waiting For Response</div>
     <form>
         <div id="output" class="terminal-response">
@@ -51,8 +49,6 @@
     </form>
     <br/>
 </div>
-<script src="js/require.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="js/window.js"></script>
 <script src="js/index.js"></script>
 </body>

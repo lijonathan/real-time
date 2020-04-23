@@ -22,7 +22,7 @@ class CallbackContainer(object):
     # Processed_Data topic callback function
     def processed_data_callback(self, client, userdata, message):
         # Write received data to file
-        with open ("hand_data.txt", 'w') as data_file:
+        with open ("../public/hand_data.txt", 'w') as data_file:
             write_line = str(message.payload)
             write_line = write_line.strip("b")
             data_file.write(write_line)

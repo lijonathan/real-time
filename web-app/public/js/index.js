@@ -1,30 +1,14 @@
-// window.setInterval(function () {
-//     const waitMessage = document.getElementById("wait-message");
-//     waitMessage.innerText = "Receiving, please wait..."
-//     const rawFile = new XMLHttpRequest();
-//     rawFile.open("GET", 'hand_data.txt', true);
-//     rawFile.onreadystatechange = function () {
-//         if (rawFile.readyState === 4) {
-//             if (rawFile.status === 200 || rawFile.status == 0) {
-//                 const allText = rawFile.responseText;
-//                 const textAreaTag = document.getElementById("output");
-//                 textAreaTag.innerHTML = allText
-//             }
-//         }
-//     };
-//     rawFile.send(null);
-//     waitMessage.innerText = "Ready To Play"
-// }, 2000);
-
 function subscribeStart() {
     $.ajax({
         type: "GET",
         url: "http://127.0.0.1:5000/subscribe-start",
-        crossDomain:true,
-        success: function() {
+        crossDomain: true,
+        success: function () {
+            const subButton = document.getElementById("subscribe-button");
+            subButton.className = "btn btn-primary button-position disabled"
             setTimeout(readyToPlay, 3000);
         },
-        error: function() {
+        error: function () {
             const waitMessage = document.getElementById("wait-message");
             waitMessage.style.color = 'red';
             waitMessage.innerText = "Error Starting Subscription Service"
@@ -32,59 +16,40 @@ function subscribeStart() {
     });
 }
 
-function readyToPlay(){
+function readyToPlay() {
     const waitMessage = document.getElementById("wait-message");
     waitMessage.style.color = 'green';
     waitMessage.innerText = "Ready To Play";
 }
 
 
-// function cloudStart() {
-//     $.ajax({
-//         type: "GET",
-//         url: "http://127.0.0.1:5000/cloud-start",
-//         crossDomain:true,
-//         error: function() {
-//             const waitMessage = document.getElementById("wait-message");
-//             waitMessage.style.color = 'red';
-//             waitMessage.innerText = "Error Starting Subscription Service"
-//         },
-//
-//     });
-// }
-
-
 function cloudStart(temp) {
+    const trueDiv = document.getElementById("response-text");
+    trueDiv.className = "alert alert-warning display-margin";
+    trueDiv.innerText = "Waiting For Response"
     $.ajax({
         type: "GET",
         url: "http://127.0.0.1:5000/cloud-start",
-        crossDomain:true,
-        success: function(data) {
-            setTimeout(function() {
+        crossDomain: true,
+        success: function (data) {
+            setTimeout(function () {
                 mainLetterFind(temp)
             }, 5000);
+            console.log(data);
+            console.log("Inside success for Cloud Start")
         },
-        error: function(result) {
+        error: function (result) {
             const waitMessage = document.getElementById("wait-message");
             waitMessage.style.color = 'red';
             waitMessage.innerText = "Error Starting Subscription Service"
         },
 
     });
+
 }
 
-
-// function findLetter(temp) {
-//     const numGenHeader = document.getElementById("letter-generator");
-//     numGenHeader.innerText = temp;
-//     const str = document.getElementById("output").innerText;
-//     const lowerTemp = temp.toLowerCase();
-//     const re = new RegExp(lowerTemp, 'g');
-//     const tempValue = str.search(re);  //to match letter to what I have
-//     switcher(tempValue);
-// }
-
 function switcher(value) {
+
     if (value === -1) {
         const falseDiv = document.getElementById("response-text");
         falseDiv.className = "alert alert-danger display-margin";
@@ -97,13 +62,16 @@ function switcher(value) {
 
 }
 
+
 function mainLetterFind(temp) {
     const rawFile = new XMLHttpRequest();
+    console.log("Inside Main Letter Find")
     let allText = '';
     rawFile.open("GET", 'hand_data.txt', true);
     rawFile.onreadystatechange = function () {
         if (rawFile.readyState === 4) {
             if (rawFile.status === 200 || rawFile.status === 0) {
+                console.log("Found txt file")
                 allText = rawFile.responseText;
                 const textAreaTag = document.getElementById("output");
                 textAreaTag.innerHTML = allText;
@@ -112,6 +80,7 @@ function mainLetterFind(temp) {
                 switcher(temp);
             }
         }
+        console.log(rawFile.status)
     };
     rawFile.send(null);
 };
