@@ -5,24 +5,37 @@ CSE 520 - Real Time Systems
   - Jeremy Manin
   - Jonathan Li
 
-## Prerequistes for UI
+# Prerequistes
+
+### Front End
   - Node,js
-  - Other dependences run the following
+  - Other dependencies run the following
      ```
      $ npm install jquery semantic-ui-css handlebars vanilla-router express dotenv axios
      ```
+
+### Backend
+   - In the cmd prompt navigate to \real-time\web-app\backend
+        ```
+        pip install flask
+        pip install flask-cors
+        pip install AWSIoTPythonSDK
+        ```
    
-## Starting App
-  - Navigate to the following path
+# Starting App
+
+### Front End
+  - Navigate to the following path and run the below command
    ```
    ~/real-time/web-app
    $ node server.js or npm start
    ```
   - App will run on http://localhost:8080/
-  
-## Current UI Issues:
-  - Require function still not working
-  - Timing issues with javascript setInterval()
-
-## References to UI Issues:
-  - https://requirejs.org/docs/api.html#jsfiles
+ 
+ ### Backend
+   - Navigate to the following path and run the below commands
+   ```
+   ~/real-time/web-app/backend
+   set FLASK_APP=backend.py
+   flask run
+   ```
