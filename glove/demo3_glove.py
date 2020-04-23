@@ -102,13 +102,14 @@ while not bno_started:
         led.blink(0.1, 0.1, 5)
         time.sleep(1)
 ## Calibrate BNO055
-cal_data = open('bno055_cal.dat', 'rb')
+script_path = os.path.dirname(os.path.realpath(__file__))
+cal_data_path = os.path.join(script_path, 'bno055_cal.dat')
+cal_data = open(cal_data_path, 'rb')
 bno.set_calibration(cal_data.read())
 
 # Setup AWS IoT
 ## Configure AWS IoT connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
-script_path = os.path.dirname(os.path.realpath(__file__))
 root_CA_path = os.path.join(script_path, "../certs/root-CA.crt")
 certificate_path = os.path.join(script_path, "../certs/2db4660fce-certificate.pem.crt")
 private_key_path = os.path.join(script_path, "../certs/2db4660fce-private.pem.key")
