@@ -5,6 +5,21 @@ CSE 520 - Real Time Systems
   - Jeremy Manin
   - Jonathan Li
 
+# Directory Structure
+
+  - real-time/certs
+  - real-time/glove
+  - real-time/learn
+  - real-time/webapp/backend
+    - python scripts that are triggered by the javascript functions to subscribe and trigger the application
+  - real-time/webapp/public
+    - /css - custom styles outside Bootstrap library
+    - /js - Javascript functions called from the HTML
+    - index.html - main webpage
+    - hand_data.txt -  written to during the subscription process
+  - server.js - Node,js launches this script which creates a node for the app to run on
+
+
 # Prerequistes
 
 ### Front End
