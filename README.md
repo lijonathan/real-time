@@ -10,6 +10,8 @@ CSE 520 - Real Time Systems
   - real-time/certs
   - real-time/glove
   - real-time/learn
+    - hyperparameter optimization on training data for random forest classifier and k-nearest neighbors
+    - subscribe/publish script that builds a random forest classifier with optimized hyperparameters on the training data, classifies incoming glove data, sends classified result to the frontend over AWS IOT
   - real-time/webapp/backend
     - python scripts that are triggered by the javascript functions to subscribe and trigger the application
   - real-time/webapp/public
