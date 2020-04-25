@@ -33,7 +33,7 @@ CSE 520 - Real Time Systems
       - **backend_sub.py** - Subscription script called by backend.py which runs on a separate thread.
     - **real-time/webapp/public/**
       - **css/**
-        - **styles.css - Custom styles outside Bootstrap library.
+        - **styles.css** - Custom styles outside Bootstrap library.
       - **js/**
         - **index.js** - Javascript functions called from the HTML.
       - **index.html** - Main UI webpage.
@@ -43,13 +43,15 @@ CSE 520 - Real Time Systems
     - **package.json** - <TO DO: ADD DESCRPTION>
     - **server.js** - Node.js launches this script which creates a node for the app to run on.
 
-
 # Dependencies
+
+## Cloud
+ - <TO DO: ADD CLOUD DEPENDENCIES>
 
 ## Front End
 
 ### Front End UI
-  - Node,js
+  - Node.js
   - `npm install jquery semantic-ui-css handlebars vanilla-router express dotenv axios`
 
 ### Backend Server
@@ -62,6 +64,9 @@ CSE 520 - Real Time Systems
   - Adafruit's old BNO055 python library. Install instructions can be found [here](https://learn.adafruit.com/bno055-absolute-orientation-sensor-with-raspberry-pi-and-beaglebone-black/software).
 
 # Starting Up
+
+## Cloud
+ - <TO DO: ADD STARTUP INSTRUCTIONS>
 
 ## Front End
 
