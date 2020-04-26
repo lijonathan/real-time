@@ -1,6 +1,17 @@
+'''
+* CSE520 Real-Time Systems
+* BNO055 Calibration Data Recording and Testing Utility Script
+* Jeremy Manin
+*
+* usage: python3 cal_test.py <r/w> <filename>
+'''
+
+# Import utility libraries
 import time, sys
+# Import BNO055 library
 from Adafruit_BNO055 import BNO055
 
+# Check command line parameters
 if (len(sys.argv) !=  3):
     print('Usage: cal_test.py <r/w> <filename>')
     sys.exit(1)
@@ -13,6 +24,7 @@ else:
         print('Usage: cal_test.py <r/w> <filename>')
         sys.exit(1)
 
+# Create and initialize BNO055 device
 bno = BNO055.BNO055(serial_port='/dev/serial0', rst=13)
 
 if not bno.begin():

@@ -3,6 +3,8 @@
 * CSE520 Real-Time Systems
 * Demo 3 (Final Demo) Glove Sensor Data Collection Service
 * Jeremy Manin
+*
+* usage: python3 demo3_glove.py
 '''
 
 #######################

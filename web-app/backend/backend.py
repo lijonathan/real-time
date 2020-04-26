@@ -2,15 +2,21 @@
 * CSE520 Real-Time Systems
 * UI Backend flask server
 * Jeremy Manin, Justin Marshall
+*
+* usage: (with FLASK_APP env var set to "backend.py") flask run
 '''
 
+# Import utility libraries
+import json
+import logging
+import threading
+import time
+# Import flask libraries
 from flask import Flask
 from flask_cors import CORS
-import threading
+# Import AWS IoT library
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-import logging
-import time
-import json
+# Import backend subscription thread
 import backend_sub
 
 # Flask setup
@@ -51,18 +57,21 @@ myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 myAWSIoTMQTTClient.connect()
 time.sleep(2)
 
+# Create thread object for backend subwscription service
 class sub_thread (threading.Thread):
    def __init__(self):
       threading.Thread.__init__(self)
    def run(self):
         backend_sub.start_sub()
 
+# Subscribe Start - Starts up backend subscription service
 @app.route("/subscribe-start")
 def start_subscribe():
     my_sub_thread = sub_thread()
     my_sub_thread.start()
     return('Subscription thread started')
 
+# Cloud Start - Sends cloud control topic to get gesture from glove
 @app.route("/cloud-start")
 def start_cloud():
     # Build and publish control topic telling cloud to start

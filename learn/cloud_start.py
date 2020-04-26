@@ -1,9 +1,9 @@
 '''
 * CSE520 Real-Time Systems
-* Demo 1 Glove Sensor Data Collection Start Test Command
+* Cloud Client Data Collection Start Command Utility Script
 * Jeremy Manin
 *
-* Created with help from sample code from AWS
+* usage: python3 cloud_start.py
 '''
 
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
@@ -11,7 +11,8 @@ import logging
 import time
 import json
 
-# Connection settings
+# Setup AWS IoT
+## Connection settings
 host = "an91x6ytmr3ss-ats.iot.us-east-2.amazonaws.com"
 rootCAPath = "../certs/root-CA.crt"
 certificatePath = "../certs/2db4660fce-certificate.pem.crt"
@@ -20,7 +21,7 @@ port = 8883
 clientId = "test_controller"
 controlTopic = "$aws/things/cloud_control/shadow/update"
 
-# Configure logging
+## Configure logging
 logger = logging.getLogger("AWSIoTPythonSDK.core")
 logger.setLevel(logging.DEBUG)
 streamHandler = logging.StreamHandler()
@@ -28,12 +29,12 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 streamHandler.setFormatter(formatter)
 logger.addHandler(streamHandler)
 
-# Init AWSIoTMQTTClient
+## Init AWSIoTMQTTClient object
 myAWSIoTMQTTClient = AWSIoTMQTTClient(clientId)
 myAWSIoTMQTTClient.configureEndpoint(host, port)
 myAWSIoTMQTTClient.configureCredentials(rootCAPath, privateKeyPath, certificatePath)
 
-# AWSIoTMQTTClient connection configuration
+## AWSIoTMQTTClient connection configuration
 myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
 myAWSIoTMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
 myAWSIoTMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz

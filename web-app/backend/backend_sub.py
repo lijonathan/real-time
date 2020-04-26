@@ -2,6 +2,8 @@
 * CSE520 Real-Time Systems
 * UI Backend subscription service
 * Jeremy Manin, Justin Marshall
+*
+* Used by backend.py when user clicks button to start subscription service
 '''
 
 # Import utility libs
