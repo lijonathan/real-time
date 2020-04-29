@@ -68,7 +68,7 @@ CSE 520 - Real Time Systems
 # Starting Up
 
 ## Cloud
- - cd <PATH_TO_REPO>/learn
+ - `cd <PATH_TO_REPO>/learn`
  - For hyperparameter search
    ```
    python3 hyperparameter_optimization.py
