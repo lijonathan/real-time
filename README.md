@@ -46,7 +46,9 @@ CSE 520 - Real Time Systems
 # Dependencies
 
 ## Cloud
- - <TO DO: ADD CLOUD DEPENDENCIES>
+ - python 3
+ - `pip install sklearn`
+ - AWS EC2 Instance
 
 ## Front End
 
@@ -66,7 +68,15 @@ CSE 520 - Real Time Systems
 # Starting Up
 
 ## Cloud
- - <TO DO: ADD STARTUP INSTRUCTIONS>
+ - cd <PATH_TO_REPO>/learn
+ - For hyperparameter search
+   ```
+   python3 hyperparameter_optimization.py
+   ```
+ - To start the Random Forest and subscribe to the glove data
+   ```
+   python3 demo_cloud.py
+   ```
 
 ## Front End
 
