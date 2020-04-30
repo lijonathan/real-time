@@ -38,9 +38,7 @@ CSE 520 - Real Time Systems
         - **index.js** - Javascript functions called from the HTML.
       - **index.html** - Main UI webpage.
       - ***hand_data.txt*** - Temp file written to during the subscription process. Not included in repository.
-    - **.eslintrc.json** - <TO DO: ADD DESCRIPTION>
-    - **package-lock.json** - <TO DO: ADD DESCRIPTION>
-    - **package.json** - <TO DO: ADD DESCRPTION>
+    - **.eslintrc.json, package-lock.json, package.json** - Specify configuration information that is read automatically on build/boot.
     - **server.js** - Node.js launches this script which creates a node for the app to run on.
 
 # Dependencies
@@ -48,6 +46,7 @@ CSE 520 - Real Time Systems
 ## Cloud
  - python 3
  - `pip install sklearn`
+ - `pip install AWSIoTPythonSDK`
  - AWS EC2 Instance
 
 ## Front End
