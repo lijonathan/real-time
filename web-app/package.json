@@ -16,7 +16,7 @@
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.17.1",
-    "handlebars": "^4.7.6",
+    "handlebars": "^4.7.7",
     "jquery": "^3.5.0",
     "python-shell": "^1.0.8",
     "requirejs": "^2.3.6",
